@@ -1,0 +1,16 @@
+.form-control:focus {
+  border-color: #2f8c60 !important;
+  box-shadow: 0 0 0 0.25rem rgba(47, 140, 96, 0.25) !important;
+}
+
+.input-group-text:focus-within {
+  border-color: #2f8c60 !important;
+}
+.login-btn {
+  background-color: rgba(74, 163, 90, 1);
+  color: white;
+}
+.login-btn:hover {
+  background-color: rgba(63, 138, 76, 1);
+  color: white;
+}

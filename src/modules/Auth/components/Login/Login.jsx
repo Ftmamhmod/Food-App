@@ -1,10 +1,11 @@
 import axios from "axios";
 
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
 
-const Login = () => {
+const Login = ({ handleLogin }) => {
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -16,7 +17,8 @@ const Login = () => {
         "https://upskilling-egypt.com:3006/api/v1/Users/Login",
         data
       );
-      console.log(response);
+      console.log(response.data.token);
+      localStorage.setItem("token", response.data.token);
       toast.success("Login successful!", {
         position: "top-right",
         autoClose: 5000,
@@ -28,6 +30,8 @@ const Login = () => {
         theme: "colored",
         transition: Bounce,
       });
+      navigate("/dashboard");
+      handleLogin();
     } catch (error) {
       toast.error(`Login failed. ${error.response.data.message}`, {
         position: "top-right",
@@ -71,7 +75,7 @@ const Login = () => {
       {errors.email && (
         <span className="text-danger">{errors.email.message}</span>
       )}
-      <div className="input-group mt-4">
+      <div className="input-group mt-3">
         <span className="input-group-text text-muted" id="basic-addon1">
           <i className="fa fa-lock"></i>
         </span>

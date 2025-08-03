@@ -2,7 +2,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./App.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import AuthLayout from "./modules/Shared/components/AuthLayout/AuthLayout";
 import ForgetPass from "./modules/Auth/components/ForgetPass/ForgetPass";
 import ChangePass from "./modules/Auth/components/ChangePass/ChangePass";
@@ -19,16 +23,34 @@ import UserList from "./modules/Users/components/UsersList/UserList";
 import Login from "./modules/Auth/components/Login/Login";
 import Register from "./modules/Auth/components/Register/Register";
 import ResipesList from "./modules/Recipes/components/ResipesList/ResipesList";
+import { useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import ProtectedRouted from "./modules/Shared/ProtectedRouted/ProtectedRouted";
 
 function App() {
+  const [loginUser, setLoginUser] = useState(null);
+  const handleLogin = () => {
+    const encode = localStorage.getItem("token");
+
+    if (encode) {
+      const decode = jwtDecode(encode);
+
+      setLoginUser(decode);
+    }
+  };
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    <Navigate to="/login" />;
+    setLoginUser(null);
+  };
   const routes = createBrowserRouter([
     {
       path: "",
       element: <AuthLayout />,
       errorElement: <NotFound />,
       children: [
-        { path: "", element: <Login /> },
-        { path: "Login", element: <Login /> },
+        { path: "", element: <Login handleLogin={handleLogin} /> },
+        { path: "Login", element: <Login handleLogin={handleLogin} /> },
         { path: "register", element: <Register /> },
         { path: "forget-pass", element: <ForgetPass /> },
         { path: "change-pass", element: <ChangePass /> },
@@ -38,7 +60,11 @@ function App() {
     },
     {
       path: "dashboard",
-      element: <MasterLayout />,
+      element: (
+        <ProtectedRouted loginUser={loginUser}>
+          <MasterLayout handleLogout={handleLogout} />
+        </ProtectedRouted>
+      ),
       errorElement: <NotFound />,
       children: [
         { path: "", element: <Dashboard /> },

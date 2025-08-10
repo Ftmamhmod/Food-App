@@ -2,13 +2,13 @@ import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import logo from "./../../../../assets/images/3.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-const SideBar = () => {
+const SideBar = ({ handleLogout }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const handleToggle = () => {
     setIsCollapsed(!isCollapsed);
   };
   return (
-    <div className="sidebar-container">
+    <div className="sidebar-container fixed">
       <Sidebar collapsed={isCollapsed}>
         <Menu>
           <img
@@ -53,7 +53,7 @@ const SideBar = () => {
             </MenuItem>
             <MenuItem
               icon={<i className="fa fa-sign-out-alt"></i>}
-              component={<Link to={"/logout"} />}
+              onClick={handleLogout}
             >
               Log out
             </MenuItem>

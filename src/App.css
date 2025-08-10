@@ -1,25 +1,36 @@
+:root {
+  --primary-color: rgba(0, 146, 71, 1);
+  --secondary-color: #1f263e;
+}
+
 .form-control:focus {
-  border-color: #2f8c60 !important;
+  border-color: var(--primary-color) !important;
   box-shadow: 0 0 0 0.25rem rgba(47, 140, 96, 0.25) !important;
 }
 
 .input-group-text:focus-within {
-  border-color: #2f8c60 !important;
+  border-color: var(--primary-color) !important;
 }
 .login-btn {
-  background-color: rgba(74, 163, 90, 1);
+  background-color: var(--primary-color);
   color: white;
 }
 .login-btn:hover {
   background-color: rgba(63, 138, 76, 1);
   color: white;
 }
-.sidebar-container .ps-sidebar-container {
+.bg-main {
+  background-color: var(--primary-color);
+}
+.sidebar-container .ps-sidebar-container,
+.sidebar-container .ps-sidebar-root {
   background-color: rgba(31, 38, 62, 1);
   color: white;
-  height: 100vh;
+  min-height: 140vh;
+  height: auto;
   border-top-right-radius: 45px;
 }
+
 .sidebar-container .ps-menu-button:hover {
   background-color: rgba(0, 146, 71, 0.1) !important;
   border-left: solid 4px #2f8c60;

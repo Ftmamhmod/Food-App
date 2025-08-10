@@ -4,7 +4,7 @@ import homeImg from "./../../../../assets/images/eating vegan food-rafiki.png";
 const Header = ({ title, pargraph }) => {
   const { pathname } = useLocation();
   return (
-    <div className="container bg-success  rounded-4 text-white ps-5 pe-5 ">
+    <div className="container bg-main  rounded-4 text-white ps-5 pe-5 ">
       <div className="row justify-content-between align-items-center">
         <div className="col-md-8 ">
           <div className="card-body">

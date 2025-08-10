@@ -1,12 +1,12 @@
 const Navbar = ({ loginUser }) => {
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary  rounded-4">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary  rounded-4 ">
         <div className="container-fluid d-flex justify-content-between">
           <div className="col-md-8">
-            <form className="w-100 " role="search">
+            <form className="w-100 p-1 " role="search">
               <input
-                className="form-control "
+                className="form-control  rounded-5"
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
@@ -14,7 +14,7 @@ const Navbar = ({ loginUser }) => {
             </form>
           </div>
 
-          <div className=" col-md-4" id="navbarSupportedContent">
+          <div className=" col-md-2 " id="navbarSupportedContent">
             <ul className="navbar-nav ">
               <li className="nav-item dropdown">
                 <a

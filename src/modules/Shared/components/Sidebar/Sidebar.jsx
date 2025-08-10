@@ -1,12 +1,63 @@
-const Sidebar = ({ handleLogout }) => {
+import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
+import logo from "./../../../../assets/images/3.png";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+const SideBar = () => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const handleToggle = () => {
+    setIsCollapsed(!isCollapsed);
+  };
   return (
-    <div>
-      Sidebar
-      <button className="btn btn-danger" onClick={handleLogout}>
-        Logout
-      </button>
-    </div>
+    <Sidebar collapsed={isCollapsed}>
+      <Menu>
+        <img
+          className="w-100 md:w-50"
+          onClick={handleToggle}
+          src={logo}
+          alt="logo"
+        />
+        <MenuItem
+          icon={<i className="fa fa-home"></i>}
+          component={<Link to={"/dashboard"} />}
+        >
+          {" "}
+          Home{" "}
+        </MenuItem>
+        <MenuItem
+          icon={<i className="fa fa-users"></i>}
+          component={<Link to={"/dashboard/users"} />}
+        >
+          {" "}
+          Users{" "}
+        </MenuItem>
+        <MenuItem
+          icon={<i className="fa fa-utensils"></i>}
+          component={<Link to={"/dashboard/recipes"} />}
+        >
+          Recipes
+        </MenuItem>
+        <MenuItem
+          icon={<i className="fa fa-list"></i>}
+          component={<Link to={"/dashboard/categories"} />}
+        >
+          Categories
+        </MenuItem>
+
+        <MenuItem
+          icon={<i className="fa fa-key"></i>}
+          component={<Link to={"/change-password"} />}
+        >
+          Change Password
+        </MenuItem>
+        <MenuItem
+          icon={<i className="fa fa-sign-out-alt"></i>}
+          component={<Link to={"/logout"} />}
+        >
+          Log out
+        </MenuItem>
+      </Menu>
+    </Sidebar>
   );
 };
 
-export default Sidebar;
+export default SideBar;

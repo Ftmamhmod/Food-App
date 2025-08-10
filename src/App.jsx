@@ -23,7 +23,7 @@ import UserList from "./modules/Users/components/UsersList/UserList";
 import Login from "./modules/Auth/components/Login/Login";
 import Register from "./modules/Auth/components/Register/Register";
 import ResipesList from "./modules/Recipes/components/ResipesList/ResipesList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import ProtectedRouted from "./modules/Shared/ProtectedRouted/ProtectedRouted";
 
@@ -43,6 +43,10 @@ function App() {
     <Navigate to="/login" />;
     setLoginUser(null);
   };
+  useEffect(() => {
+    if (localStorage.getItem("token")) handleLogin();
+  }, []);
+
   const routes = createBrowserRouter([
     {
       path: "",
@@ -50,11 +54,11 @@ function App() {
       errorElement: <NotFound />,
       children: [
         { path: "", element: <Login handleLogin={handleLogin} /> },
-        { path: "Login", element: <Login handleLogin={handleLogin} /> },
+        { path: "login", element: <Login handleLogin={handleLogin} /> },
         { path: "register", element: <Register /> },
-        { path: "forget-pass", element: <ForgetPass /> },
-        { path: "change-pass", element: <ChangePass /> },
-        { path: "reset-pass", element: <ResetPass /> },
+        { path: "forget-password", element: <ForgetPass /> },
+        { path: "change-password", element: <ChangePass /> },
+        { path: "reset-password", element: <ResetPass /> },
         { path: "verify-account", element: <VerifyAccount /> },
       ],
     },
@@ -62,13 +66,13 @@ function App() {
       path: "dashboard",
       element: (
         <ProtectedRouted loginUser={loginUser}>
-          <MasterLayout handleLogout={handleLogout} />
+          <MasterLayout handleLogout={handleLogout} loginUser={loginUser} />
         </ProtectedRouted>
       ),
       errorElement: <NotFound />,
       children: [
-        { path: "", element: <Dashboard /> },
-        { path: "recipe", element: <ResipesList /> },
+        { path: "", element: <Dashboard loginUser={loginUser} /> },
+        { path: "recipes", element: <ResipesList /> },
         { path: "recipe-data", element: <ResipesData /> },
         { path: "categories", element: <CategoriesList /> },
         { path: "categories-data", element: <CategoriesData /> },

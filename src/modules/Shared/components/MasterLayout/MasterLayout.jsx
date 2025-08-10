@@ -1,17 +1,16 @@
-import Sidebar from "./../Sidebar/Sidebar";
 import Navbar from "./../Navbar/Navbar";
 import Header from "./../Header/Header";
 import { Outlet } from "react-router-dom";
-const MasterLayout = ({ handleLogout }) => {
+import SideBar from "../Sidebar/Sidebar";
+const MasterLayout = ({ handleLogout, loginUser }) => {
   return (
     <>
-      <div className="d-flex">
-        <div className="w-25">
-          <Sidebar handleLogout={handleLogout} />
+      <div className="d-flex vh-100">
+        <div className=" bg-info">
+          <SideBar handleLogout={handleLogout} />
         </div>
-        <div className="w-100">
-          <Navbar />
-          <Header />
+        <div className="w-100 bg-dark">
+          <Navbar loginUser={loginUser} />
           <Outlet />
         </div>
       </div>

@@ -7,7 +7,7 @@ const ForgetPass = () => {
   const navigate = useNavigate();
   const {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm();
   const onSubmit = async (data) => {
@@ -28,7 +28,7 @@ const ForgetPass = () => {
         theme: "colored",
         transition: Bounce,
       });
-      navigate("/reset-pass");
+      navigate("/reset-password");
     } catch (error) {
       toast.error(`Reset link failed. ${error.response.data.message}`, {
         position: "top-right",
@@ -76,8 +76,12 @@ const ForgetPass = () => {
         <span className="text-danger">{errors.email.message}</span>
       )}
       <div className="mt-4 mb-4">
-        <button type="submit" className="btn w-100 p-2 login-btn fw-bold">
-          Submit
+        <button
+          disabled={isSubmitting}
+          type="submit"
+          className=" btn w-100 p-2 login-btn fw-bold``btn w-100 p-2 login-btn fw-bold "
+        >
+          {isSubmitting ? "Sending..." : "Submit"}
         </button>
       </div>
     </form>

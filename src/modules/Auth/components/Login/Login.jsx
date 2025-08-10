@@ -46,6 +46,9 @@ const Login = ({ handleLogin }) => {
       });
     }
   };
+  if (localStorage.getItem("token")) {
+    navigate("/dashboard");
+  }
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="title mt-4">
@@ -95,7 +98,10 @@ const Login = ({ handleLogin }) => {
         <Link to="/register" className="text-decoration-none text-black">
           Register Now?
         </Link>
-        <Link to="/forget-pass" className="text-decoration-none text-success">
+        <Link
+          to="/forget-password"
+          className="text-decoration-none text-success"
+        >
           Forget Password?
         </Link>
       </div>

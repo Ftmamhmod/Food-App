@@ -6,10 +6,10 @@ const MasterLayout = ({ handleLogout, loginUser }) => {
   return (
     <>
       <div className="d-flex vh-100">
-        <div className=" bg-info">
+        <div>
           <SideBar handleLogout={handleLogout} />
         </div>
-        <div className="w-100 bg-dark">
+        <div className="w-100 ">
           <Navbar loginUser={loginUser} />
           <Outlet />
         </div>

@@ -14,3 +14,13 @@
   background-color: rgba(63, 138, 76, 1);
   color: white;
 }
+.sidebar-container .ps-sidebar-container {
+  background-color: rgba(31, 38, 62, 1);
+  color: white;
+  height: 100vh;
+  border-top-right-radius: 45px;
+}
+.sidebar-container .ps-menu-button:hover {
+  background-color: rgba(0, 146, 71, 0.1) !important;
+  border-left: solid 4px #2f8c60;
+}

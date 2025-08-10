@@ -1,5 +1,4 @@
 import Header from "./../../../Shared/components/Header/Header";
-import homeImg from "./../../../../assets/images/eating vegan food-rafiki.png";
 
 const Dashboard = ({ loginUser }) => {
   return (
@@ -10,7 +9,6 @@ const Dashboard = ({ loginUser }) => {
         pargraph={
           "This is a welcoming screen for the entry of the application , you can now see the options"
         }
-        img={homeImg}
       />
     </>
   );

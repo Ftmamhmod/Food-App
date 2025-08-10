@@ -8,55 +8,59 @@ const SideBar = () => {
     setIsCollapsed(!isCollapsed);
   };
   return (
-    <Sidebar collapsed={isCollapsed}>
-      <Menu>
-        <img
-          className="w-100 md:w-50"
-          onClick={handleToggle}
-          src={logo}
-          alt="logo"
-        />
-        <MenuItem
-          icon={<i className="fa fa-home"></i>}
-          component={<Link to={"/dashboard"} />}
-        >
-          {" "}
-          Home{" "}
-        </MenuItem>
-        <MenuItem
-          icon={<i className="fa fa-users"></i>}
-          component={<Link to={"/dashboard/users"} />}
-        >
-          {" "}
-          Users{" "}
-        </MenuItem>
-        <MenuItem
-          icon={<i className="fa fa-utensils"></i>}
-          component={<Link to={"/dashboard/recipes"} />}
-        >
-          Recipes
-        </MenuItem>
-        <MenuItem
-          icon={<i className="fa fa-list"></i>}
-          component={<Link to={"/dashboard/categories"} />}
-        >
-          Categories
-        </MenuItem>
+    <div className="sidebar-container">
+      <Sidebar collapsed={isCollapsed}>
+        <Menu>
+          <img
+            className="w-100 pt-4"
+            onClick={handleToggle}
+            src={logo}
+            alt="logo"
+          />
+          <div className="pt-5">
+            <MenuItem
+              icon={<i className="fa fa-home"></i>}
+              component={<Link to={"/dashboard"} />}
+            >
+              {" "}
+              Home{" "}
+            </MenuItem>
+            <MenuItem
+              icon={<i className="fa fa-users"></i>}
+              component={<Link to={"/dashboard/users"} />}
+            >
+              {" "}
+              Users{" "}
+            </MenuItem>
+            <MenuItem
+              icon={<i className="fa fa-utensils"></i>}
+              component={<Link to={"/dashboard/recipes"} />}
+            >
+              Recipes
+            </MenuItem>
+            <MenuItem
+              icon={<i className="fa fa-list"></i>}
+              component={<Link to={"/dashboard/categories"} />}
+            >
+              Categories
+            </MenuItem>
 
-        <MenuItem
-          icon={<i className="fa fa-key"></i>}
-          component={<Link to={"/change-password"} />}
-        >
-          Change Password
-        </MenuItem>
-        <MenuItem
-          icon={<i className="fa fa-sign-out-alt"></i>}
-          component={<Link to={"/logout"} />}
-        >
-          Log out
-        </MenuItem>
-      </Menu>
-    </Sidebar>
+            <MenuItem
+              icon={<i className="fa fa-key"></i>}
+              component={<Link to={"/change-password"} />}
+            >
+              Change Password
+            </MenuItem>
+            <MenuItem
+              icon={<i className="fa fa-sign-out-alt"></i>}
+              component={<Link to={"/logout"} />}
+            >
+              Log out
+            </MenuItem>
+          </div>
+        </Menu>
+      </Sidebar>
+    </div>
   );
 };
 

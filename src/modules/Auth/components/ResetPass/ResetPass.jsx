@@ -18,10 +18,9 @@ const ResetPass = () => {
         "https://upskilling-egypt.com:3006/api/v1/Users/Reset",
         data
       );
-      console.log(response);
-      toast.success("Reset password success!", {
+      toast.success("Reset password success!", response.data.message, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: true,
@@ -34,7 +33,7 @@ const ResetPass = () => {
     } catch (error) {
       toast.error(`Reset password failed. ${error.response.data.message}`, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: true,

@@ -1,6 +1,5 @@
 import NoData from "./../NoData/NoData";
 const List = ({ title, paragraph, buttonText, data }) => {
-  console.log(data);
   return (
     <div>
       <div className="title d-flex justify-content-between align-items-center p-2 mt-2 mb-2">
@@ -31,13 +30,17 @@ const List = ({ title, paragraph, buttonText, data }) => {
               <tr key={item.id}>
                 <td>{item.id}</td>
                 <td>{item.name}</td>
-                <td>
-                  <i class="fa-solid fa-ellipsis"></i>
+                <td className="cursor-pointer">
+                  <i className="fa-solid fa-ellipsis "></i>
                 </td>
               </tr>
             ))
           ) : (
-            <NoData />
+            <tr>
+              <td colSpan="3">
+                <NoData />
+              </td>
+            </tr>
           )}
         </tbody>
       </table>

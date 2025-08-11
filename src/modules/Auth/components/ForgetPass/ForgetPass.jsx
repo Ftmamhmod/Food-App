@@ -18,7 +18,7 @@ const ForgetPass = () => {
       );
       toast.success("Reset link sent!", response.data.message, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: true,
@@ -31,7 +31,7 @@ const ForgetPass = () => {
     } catch (error) {
       toast.error(`Reset link failed. ${error.response.data.message}`, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: true,

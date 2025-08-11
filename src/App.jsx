@@ -26,6 +26,7 @@ import ResipesList from "./modules/Recipes/components/ResipesList/ResipesList";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import ProtectedRouted from "./modules/Shared/ProtectedRouted/ProtectedRouted";
+import { Bounce, toast } from "react-toastify";
 
 function App() {
   const [loginUser, setLoginUser] = useState(null);
@@ -42,7 +43,19 @@ function App() {
     localStorage.removeItem("token");
     <Navigate to="/login" />;
     setLoginUser(null);
+    toast.success("Logout successful!", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Bounce,
+    });
   };
+
   useEffect(() => {
     if (localStorage.getItem("token")) handleLogin();
   }, []);

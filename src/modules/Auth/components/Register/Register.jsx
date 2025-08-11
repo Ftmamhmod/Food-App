@@ -16,10 +16,9 @@ const Register = () => {
         "https://upskilling-egypt.com:3006/api/v1/Users/Register",
         data
       );
-      console.log(response.data);
-      toast.success("Register successful!", {
+      toast.success("Register successful!", response.data.message, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: true,
@@ -32,7 +31,7 @@ const Register = () => {
     } catch (error) {
       toast.error(`Register failed. ${error.response.data.message}`, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: true,

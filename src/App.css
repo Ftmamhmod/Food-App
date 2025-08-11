@@ -2,7 +2,9 @@
   --primary-color: rgba(0, 146, 71, 1);
   --secondary-color: #1f263e;
 }
-
+.cursor-pointer {
+  cursor: pointer;
+}
 .form-control:focus {
   border-color: var(--primary-color) !important;
   box-shadow: 0 0 0 0.25rem rgba(47, 140, 96, 0.25) !important;

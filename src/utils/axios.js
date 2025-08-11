@@ -5,12 +5,15 @@ export const axiosInstance = axios.create({
 });
 
 export const endpoints = {
-    recepies: {
+    recipes: {
         list: "/api/v1/Recipe/?pageSize=5&pageNumber=1",
     },
 
     categories: {
         list: "/api/v1/Category/?pageSize=5&pageNumber=1",
+    },
+    users: {
+        list: "/api/v1/Users/?groups=1,2&pageSize=5&pageNumber=1"
     }
 
 }

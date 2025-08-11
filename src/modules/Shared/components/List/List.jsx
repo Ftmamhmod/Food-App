@@ -27,9 +27,9 @@ const List = ({ title, paragraph, buttonText, data }) => {
         <tbody className="m-auto">
           {data.length > 0 ? (
             data.map((item) => (
-              <tr key={item.id}>
-                <td>{item.id}</td>
-                <td>{item.name}</td>
+              <tr key={item?.id}>
+                <td>{item?.id}</td>
+                <td>{item?.name || item?.userName}</td>
                 <td className="cursor-pointer">
                   <i className="fa-solid fa-ellipsis "></i>
                 </td>

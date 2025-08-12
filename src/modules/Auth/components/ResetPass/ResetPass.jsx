@@ -9,7 +9,7 @@ const ResetPass = () => {
   const navigate = useNavigate();
   const {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
     watch,
   } = useForm();
@@ -152,8 +152,12 @@ const ResetPass = () => {
       )}
 
       <div className="mt-3 mb-4">
-        <button type="submit" className="btn w-100 p-2 login-btn fw-bold">
-          Reset Password
+        <button
+          type="submit"
+          className="btn w-100 p-2 login-btn fw-bold"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Submitting..." : "Reset Password"}
         </button>
       </div>
     </form>

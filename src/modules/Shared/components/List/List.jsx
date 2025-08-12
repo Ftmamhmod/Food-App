@@ -2,9 +2,15 @@ import NoData from "./../NoData/NoData";
 import deleteImg from "./../../../../assets/images/freepik--Character--inject-70.png";
 import { useEffect, useState } from "react";
 import { deleteCategory } from "../../../../api/Categories/Categories";
-import { Bounce, toast } from "react-toastify";
 
-const List = ({ title, paragraph, buttonText, data, tableHeaderCell }) => {
+const List = ({
+  title,
+  paragraph,
+  buttonText,
+  data,
+  tableHeaderCell,
+  handleAdd,
+}) => {
   const [newData, setData] = useState(data);
   const [selectedItem, setSelectedItem] = useState(null);
   const handleItemId = (id) => {
@@ -12,17 +18,8 @@ const List = ({ title, paragraph, buttonText, data, tableHeaderCell }) => {
   };
   const handleDelete = () => {
     deleteCategory(selectedItem);
-    toast.success("Category deleted successfully", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: false,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-      transition: Bounce,
-    });
+    const updatedData = newData.filter((item) => item.id !== selectedItem);
+    setData(updatedData);
   };
   useEffect(() => {
     setData(data);
@@ -68,7 +65,7 @@ const List = ({ title, paragraph, buttonText, data, tableHeaderCell }) => {
           </div>
         </div>
       </div>
-      {/* <ListModal openModal={openModal} /> */}
+
       <div className="title d-flex justify-content-between align-items-center p-2 mt-2 mb-2">
         <div className="title-text pt-2 pb-2">
           <h4>{title}</h4>
@@ -76,6 +73,9 @@ const List = ({ title, paragraph, buttonText, data, tableHeaderCell }) => {
         </div>
         <div>
           <button
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
+            onClick={handleAdd}
             type="submit"
             className=" btn w-100 pe-5 ps-5 pt-3 pb-3 login-btn  login-btn  "
           >
@@ -99,11 +99,7 @@ const List = ({ title, paragraph, buttonText, data, tableHeaderCell }) => {
                 <td>{item?.name || item?.userName}</td>
                 <td>{item?.creationDate}</td>
 
-                <td
-                  // onClick={() => handleOpenModal()}
-                  className="cursor-pointer"
-                >
-                  {/* <i className="fa-solid fa-ellipsis "></i> */}
+                <td className="cursor-pointer">
                   <i className="fa-solid fa-edit p-1 "></i>
                   <i
                     onClick={() => handleItemId(item.id)}

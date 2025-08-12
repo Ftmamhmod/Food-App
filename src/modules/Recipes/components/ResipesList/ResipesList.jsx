@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import Header from "../../../Shared/components/Header/Header";
 import List from "./../../../Shared/components/List/List";
 import { getResipes } from "../../../../api/Resipes/Resipes";
+import { useNavigate } from "react-router-dom";
 
 const ResipesList = () => {
+  const navigate = useNavigate();
   const tableHeaderCell = [
     "Item name",
     "Image",
@@ -17,6 +19,9 @@ const ResipesList = () => {
   useEffect(() => {
     getResipes(setRecipes);
   }, []);
+  const handleAdd = () => {
+    navigate("/dashboard/recipe-data");
+  };
   return (
     <>
       <title>Recipes</title>
@@ -30,6 +35,7 @@ const ResipesList = () => {
         buttonText={"Add New Item"}
         data={recipes}
         tableHeaderCell={tableHeaderCell}
+        handleAdd={handleAdd}
       />
     </>
   );

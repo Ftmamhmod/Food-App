@@ -4,6 +4,7 @@ import Header from "./../../../Shared/components/Header/Header";
 import { useEffect, useState } from "react";
 const CategoriesList = () => {
   const [categories, setCategories] = useState([]);
+  const tableHeaderCell = ["Id", "Name", "Creation Date", "Actions"];
   useEffect(() => {
     getCategories(setCategories);
   }, []);
@@ -20,6 +21,7 @@ const CategoriesList = () => {
         paragraph={"You can check all details"}
         buttonText={"Add New Category"}
         data={categories}
+        tableHeaderCell={tableHeaderCell}
       />
     </>
   );

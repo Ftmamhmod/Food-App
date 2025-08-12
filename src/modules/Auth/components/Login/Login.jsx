@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -48,6 +49,8 @@ const Login = ({ handleLogin }) => {
   if (localStorage.getItem("token")) {
     navigate("/dashboard");
   }
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="title mt-4">
@@ -83,12 +86,22 @@ const Login = ({ handleLogin }) => {
         </span>
         <input
           {...register("password", { required: "Password is required" })}
-          type="password"
+          type={showPassword ? "text" : "password"}
           className="form-control"
           placeholder="Password"
           aria-label="Password"
           aria-describedby="basic-addon1"
         />
+        <span
+          className="input-group-text"
+          onClick={() => setShowPassword(!showPassword)}
+        >
+          <i
+            className={`fa ${
+              showPassword ? "fa-eye-slash" : "fa-eye"
+            } cursor-pointer`}
+          ></i>
+        </span>
       </div>
       {errors.password && (
         <span className="text-danger">{errors.password.message}</span>

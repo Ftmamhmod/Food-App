@@ -22,6 +22,7 @@
   color: white;
 }
 .bg-main {
+  background-image: url("./../src/assets/images/bg.svg");
   background-color: var(--primary-color);
 }
 .sidebar-container .ps-sidebar-container,

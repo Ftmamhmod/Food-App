@@ -14,3 +14,17 @@ export const getCategories = async (setCategories) => {
         throw error;
     }
 };
+
+export const deleteCategory = async (id) => {
+    try {
+        const response = await axiosInstance.delete(endpoints.categories.delete.replace("{id}", id), {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error deleting category:", error);
+        throw error;
+    }
+};

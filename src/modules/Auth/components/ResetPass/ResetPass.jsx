@@ -1,9 +1,11 @@
 import axios from "axios";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
 
 const ResetPass = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -94,7 +96,7 @@ const ResetPass = () => {
         </span>
         <input
           {...register("password", { required: "Password is required" })}
-          type="password"
+          type={showPassword ? "text" : "password"}
           minLength={{
             value: 8,
             message: "Password must be at least 8 characters",
@@ -104,6 +106,16 @@ const ResetPass = () => {
           aria-label="Password"
           aria-describedby="basic-addon1"
         />
+        <span
+          className="input-group-text"
+          onClick={() => setShowPassword(!showPassword)}
+        >
+          <i
+            className={`fa ${
+              showPassword ? "fa-eye-slash" : "fa-eye"
+            } cursor-pointer`}
+          ></i>
+        </span>
       </div>
       {errors.password && (
         <span className="text-danger">{errors.password.message}</span>
@@ -118,12 +130,22 @@ const ResetPass = () => {
             required: "Confirm Password is required",
             validate: (value) => value === password || "Passwords do not match",
           })}
-          type="password"
+          type={showPassword ? "text" : "password"}
           className="form-control"
           placeholder="Confirm New Password"
           aria-label="Password"
           aria-describedby="basic-addon1"
         />
+        <span
+          className="input-group-text"
+          onClick={() => setShowPassword(!showPassword)}
+        >
+          <i
+            className={`fa ${
+              showPassword ? "fa-eye-slash" : "fa-eye"
+            } cursor-pointer`}
+          ></i>
+        </span>
       </div>
       {errors.confirmPassword && (
         <span className="text-danger">{errors.confirmPassword.message}</span>

@@ -4,6 +4,15 @@ import List from "./../../../Shared/components/List/List";
 import { getResipes } from "../../../../api/Resipes/Resipes";
 
 const ResipesList = () => {
+  const tableHeaderCell = [
+    "Item name",
+    "Image",
+    "Price",
+    "Description",
+    "tag",
+    "Actions",
+  ];
+
   const [recipes, setRecipes] = useState([]);
   useEffect(() => {
     getResipes(setRecipes);
@@ -20,6 +29,7 @@ const ResipesList = () => {
         paragraph={"You can check all details"}
         buttonText={"Add New Item"}
         data={recipes}
+        tableHeaderCell={tableHeaderCell}
       />
     </>
   );

@@ -1,7 +1,74 @@
 import NoData from "./../NoData/NoData";
-const List = ({ title, paragraph, buttonText, data }) => {
+import deleteImg from "./../../../../assets/images/freepik--Character--inject-70.png";
+import { useEffect, useState } from "react";
+import { deleteCategory } from "../../../../api/Categories/Categories";
+import { Bounce, toast } from "react-toastify";
+
+const List = ({ title, paragraph, buttonText, data, tableHeaderCell }) => {
+  const [newData, setData] = useState(data);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const handleItemId = (id) => {
+    setSelectedItem(id);
+  };
+  const handleDelete = () => {
+    deleteCategory(selectedItem);
+    toast.success("Category deleted successfully", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Bounce,
+    });
+  };
+  useEffect(() => {
+    setData(data);
+  }, [data]);
   return (
     <div>
+      <div
+        className="modal fade"
+        id="exampleModal"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body text-center">
+              {<img src={deleteImg} alt="Delete" />}
+              <h4>Delete This User ?</h4>
+              <p className="text-muted">
+                are you sure you want to delete this item ? if you are sure just
+                click on delete it
+              </p>
+            </div>
+
+            <div className="modal-footer">
+              <button
+                data-bs-dismiss="modal"
+                type="button"
+                className="btn btn-outline-danger"
+                onClick={handleDelete}
+              >
+                Delete this item
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <ListModal openModal={openModal} /> */}
       <div className="title d-flex justify-content-between align-items-center p-2 mt-2 mb-2">
         <div className="title-text pt-2 pb-2">
           <h4>{title}</h4>
@@ -16,22 +83,34 @@ const List = ({ title, paragraph, buttonText, data }) => {
           </button>
         </div>
       </div>
-      <table className="table table-hover ">
-        <thead className="table-light">
+      <table className="table table-hover rounded-4 ">
+        <thead className="table-light ">
           <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Actions</th>
+            {tableHeaderCell?.map((cell, index) => (
+              <th key={index}>{cell}</th>
+            ))}
           </tr>
         </thead>
         <tbody className="m-auto">
-          {data.length > 0 ? (
-            data.map((item) => (
+          {newData?.length > 0 ? (
+            data?.map((item) => (
               <tr key={item?.id}>
                 <td>{item?.id}</td>
                 <td>{item?.name || item?.userName}</td>
-                <td className="cursor-pointer">
-                  <i className="fa-solid fa-ellipsis "></i>
+                <td>{item?.creationDate}</td>
+
+                <td
+                  // onClick={() => handleOpenModal()}
+                  className="cursor-pointer"
+                >
+                  {/* <i className="fa-solid fa-ellipsis "></i> */}
+                  <i className="fa-solid fa-edit p-1 "></i>
+                  <i
+                    onClick={() => handleItemId(item.id)}
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    className="fa-solid fa-trash text-danger p-1"
+                  ></i>
                 </td>
               </tr>
             ))

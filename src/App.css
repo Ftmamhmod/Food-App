@@ -29,7 +29,7 @@
 .sidebar-container .ps-sidebar-root {
   background-color: rgba(31, 38, 62, 1);
   color: white;
-  min-height: 140vh;
+  min-height: 110vh;
   height: auto;
   border-top-right-radius: 45px;
 }
@@ -37,4 +37,7 @@
 .sidebar-container .ps-menu-button:hover {
   background-color: rgba(0, 146, 71, 0.1) !important;
   border-left: solid 4px #2f8c60;
+}
+.bg-light-green {
+  background-color: rgba(240, 255, 239, 1);
 }

@@ -1,4 +1,5 @@
 import Header from "./../../../Shared/components/Header/Header";
+import SecHeader from "./../../../Shared/components/sec-header/SecHeader";
 
 const Dashboard = ({ loginUser }) => {
   return (
@@ -10,6 +11,9 @@ const Dashboard = ({ loginUser }) => {
           "This is a welcoming screen for the entry of the application , you can now see the options"
         }
       />
+      <div className="pt-4">
+        <SecHeader />
+      </div>
     </>
   );
 };

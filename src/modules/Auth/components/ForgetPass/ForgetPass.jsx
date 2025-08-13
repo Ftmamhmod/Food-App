@@ -16,7 +16,7 @@ const ForgetPass = () => {
         "https://upskilling-egypt.com:3006/api/v1/Users/Reset/Request",
         data
       );
-      toast.success("Reset link sent!", response.data.message, {
+      toast.success(response.data.message, {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -27,7 +27,9 @@ const ForgetPass = () => {
         theme: "colored",
         transition: Bounce,
       });
-      navigate("/reset-password", { state: { email: response?.data.email } });
+      navigate("/reset-password", {
+        state: { email: data.email },
+      });
     } catch (error) {
       toast.error(`Reset link failed. ${error.response.data.message}`, {
         position: "top-right",

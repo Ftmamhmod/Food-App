@@ -27,7 +27,7 @@ const Register = () => {
         theme: "colored",
         transition: Bounce,
       });
-      navigate("/dashboard");
+      navigate("/verify-account");
     } catch (error) {
       toast.error(`Register failed. ${error.response.data.message}`, {
         position: "top-right",

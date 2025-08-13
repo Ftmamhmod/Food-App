@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
 
 const ResetPass = () => {
+  const location = useLocation();
+  const email = location.state?.email || "";
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const {
@@ -12,7 +14,9 @@ const ResetPass = () => {
     formState: { errors, isSubmitting },
     handleSubmit,
     watch,
-  } = useForm();
+  } = useForm({
+    defaultValues: { email: email || "" },
+  });
   const password = watch("password");
   const onSubmit = async (data) => {
     try {
@@ -20,7 +24,7 @@ const ResetPass = () => {
         "https://upskilling-egypt.com:3006/api/v1/Users/Reset",
         data
       );
-      toast.success("Reset password success!", response.data.message, {
+      toast.success(response.data.message, {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -58,6 +62,7 @@ const ResetPass = () => {
           <i className="fa fa-envelope"></i>
         </span>
         <input
+          disabled
           {...register("email", {
             required: "Email is required",
             pattern: {
@@ -67,8 +72,9 @@ const ResetPass = () => {
           })}
           type="text"
           className="form-control"
-          placeholder="Enter your E-mail"
+          placeholder={email || "Enter your E-mail"}
           aria-label="Username"
+          defaultValue={email || ""}
           aria-describedby="basic-addon1"
         />
       </div>

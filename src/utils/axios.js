@@ -7,6 +7,9 @@ export const axiosInstance = axios.create({
 export const endpoints = {
     recipes: {
         list: "/api/v1/Recipe/?pageSize=5&pageNumber=1",
+        delete: "/api/v1/Recipe/{id}",
+        create: "/api/v1/Recipe/",
+
     },
 
     categories: {

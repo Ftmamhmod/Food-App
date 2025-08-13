@@ -2,6 +2,7 @@ import NoData from "./../NoData/NoData";
 import deleteImg from "./../../../../assets/images/freepik--Character--inject-70.png";
 import { useEffect, useState } from "react";
 import { deleteCategory } from "../../../../api/Categories/Categories";
+import { updateResipes } from "../../../../api/Resipes/Resipes";
 
 const List = ({
   title,
@@ -24,6 +25,9 @@ const List = ({
   useEffect(() => {
     setData(data);
   }, [data]);
+  const handleEditRecipe = (id, updatedData) => {
+    updateResipes(id, updatedData);
+  };
   return (
     <div>
       <div
@@ -51,7 +55,6 @@ const List = ({
                 click on delete it
               </p>
             </div>
-
             <div className="modal-footer">
               <button
                 data-bs-dismiss="modal"
@@ -97,10 +100,22 @@ const List = ({
               <tr key={item?.id}>
                 <td>{item?.id}</td>
                 <td>{item?.name || item?.userName}</td>
-                <td>{item?.creationDate}</td>
+                <td>
+                  <img
+                    src={`https://upskilling-egypt.com:3006${item?.imagePath}`}
+                    alt=""
+                  />
+                </td>
+                <td>{item?.description}</td>
+                <td>{item?.tag?.id}</td>
 
                 <td className="cursor-pointer">
-                  <i className="fa-solid fa-edit p-1 "></i>
+                  <i
+                    onClick={() => handleEditRecipe(item.id, item)}
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop"
+                    className="fa-solid fa-edit p-1 "
+                  ></i>
                   <i
                     onClick={() => handleItemId(item.id)}
                     data-bs-toggle="modal"

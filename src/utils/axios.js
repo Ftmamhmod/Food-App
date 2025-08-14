@@ -9,6 +9,7 @@ export const endpoints = {
         list: "/api/v1/Recipe/?pageSize=5&pageNumber=1",
         delete: "/api/v1/Recipe/{id}",
         create: "/api/v1/Recipe/",
+        update: "/api/v1/Recipe/{id}",
 
     },
 

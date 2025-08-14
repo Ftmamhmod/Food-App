@@ -1,19 +1,18 @@
 import NoData from "./../../../Shared/components/NoData/NoData";
 import { useEffect, useState } from "react";
-import { deleteCategory } from "../../../../api/Categories/Categories";
-import { getResipes, updateResipes } from "../../../../api/Resipes/Resipes";
+import { deleteResipes, getResipes } from "../../../../api/Resipes/Resipes";
 import { useNavigate } from "react-router-dom";
 import DeleteModal from "../../../Shared/Delete-modal/DeleteModal";
+import resipeImg from "./../../../../assets/images/1041373.png";
 
 const ResipesTable = () => {
   const navigate = useNavigate();
   const tableHeaderCell = [
-    "ID",
-    "Item name",
+    "Name",
     "Image",
     "Price",
     "Description",
-    "tag",
+    "Category",
     "Actions",
   ];
 
@@ -24,20 +23,17 @@ const ResipesTable = () => {
   const handleAdd = () => {
     navigate("/dashboard/recipe-data");
   };
-
+  console.log(recipes);
   const [selectedItem, setSelectedItem] = useState(null);
   const handleItemId = (id) => {
     setSelectedItem(id);
   };
   const handleDelete = () => {
-    deleteCategory(selectedItem);
+    deleteResipes(selectedItem);
     const updatedData = recipes.filter((item) => item.id !== selectedItem);
     setRecipes(updatedData);
   };
 
-  const handleEditRecipe = (id, updatedData) => {
-    updateResipes(id, updatedData);
-  };
   return (
     <div>
       <DeleteModal handleDelete={handleDelete} itemName={"recipe"} />
@@ -70,22 +66,31 @@ const ResipesTable = () => {
           {recipes?.length > 0 ? (
             recipes?.map((item) => (
               <tr key={item?.id}>
-                <td>{item?.id}</td>
-                <td>{item?.name || item?.userName}</td>
-                <td>
-                  <img
-                    src={`https://upskilling-egypt.com:3006${item?.imagePath}`}
-                    alt=""
-                  />
+                <td>{item?.name}</td>
+                <td className="w-25 h-25">
+                  <div className=" w-50 h-50 rounded-3">
+                    <img
+                      className="w-25 h-25 rounded-3"
+                      src={
+                        item?.imagePath
+                          ? `https://upskilling-egypt.com:3006/${item.imagePath}`
+                          : resipeImg
+                      }
+                      alt=""
+                    />
+                  </div>
                 </td>
+                <td>{item?.price}</td>
                 <td>{item?.description}</td>
-                <td>{item?.tag?.id}</td>
+                <td>{item?.category[0].name}</td>
 
                 <td className="cursor-pointer">
                   <i
-                    onClick={() => handleEditRecipe(item.id, item)}
-                    data-bs-toggle="modal"
-                    data-bs-target="#staticBackdrop"
+                    onClick={() =>
+                      navigate(`/dashboard/recipe-data`, {
+                        state: { recipeData: item },
+                      })
+                    }
                     className="fa-solid fa-edit p-1 "
                   ></i>
                   <i

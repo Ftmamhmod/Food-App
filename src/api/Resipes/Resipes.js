@@ -17,9 +17,9 @@ export const getResipes = async (setResipes) => {
         throw error;
     }
 };
-export const addResipes = async (formData) => {
+export const addResipes = async (data) => {
     try {
-        const response = await axiosInstance.post(endpoints.recipes.create, formData, {
+        const response = await axiosInstance.post(endpoints.recipes.create, data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
                 "Content-Type": "multipart/form-data",

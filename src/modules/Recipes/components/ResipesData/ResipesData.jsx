@@ -1,21 +1,61 @@
 import { useForm } from "react-hook-form";
 import SecHeader from "../../../Shared/components/sec-header/SecHeader";
-import { addResipes } from "../../../../api/Resipes/Resipes";
+import { addResipes, updateResipes } from "../../../../api/Resipes/Resipes";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { getCategories } from "../../../../api/Categories/Categories";
-import { useNavigate } from "react-router-dom";
-
+import { useLocation, useNavigate } from "react-router-dom";
 const ResipesData = () => {
+  const location = useLocation();
+  const item = location.state?.recipeData || null;
+  const editMode = !!item;
+  const appendToFormData = (data) => {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("tagId", data.tagId);
+    formData.append("price", data.price);
+    formData.append("description", data.description);
+    formData.append("categoriesIds", data.categoriesIds);
+    formData.append("recipeImage", data.recipeImage[0]);
+    return formData;
+  };
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+    setValue,
+  } = useForm({
+    defaultValues: editMode
+      ? {
+          name: item.name,
+          tagId: item.tagId,
+          price: item.price,
+          categoriesIds: item.categoriesIds,
+          description: item.description,
+          recipeImage: item.recipeImage,
+        }
+      : {},
+  });
+
+  useEffect(() => {
+    if (editMode && item) {
+      setValue("name", item?.name);
+      setValue("tagId", item?.tagId);
+      setValue("price", item?.price);
+      setValue("categoriesIds", item?.categoriesIds);
+      setValue("description", item?.description);
+      setValue("recipeImage", item?.recipeImage);
+    }
+  }, [editMode, item, setValue]);
   const onSubmit = (data) => {
-    addResipes(data);
-    navigate("/dashboard/recipes");
+    if (editMode) {
+      handleEditRecipe(item.id, appendToFormData(data));
+      navigate("/dashboard/recipes");
+    } else {
+      addResipes(appendToFormData(data));
+      navigate("/dashboard/recipes");
+    }
   };
   const [tagId, setTagId] = useState(null);
   const [cat, setCat] = useState(null);
@@ -35,7 +75,9 @@ const ResipesData = () => {
       console.error("Error fetching tag ID:", error);
     }
   };
-
+  const handleEditRecipe = (id, updatedData) => {
+    updateResipes(id, updatedData);
+  };
   useEffect(() => {
     getTagId();
     getCategories(setCat);
@@ -45,25 +87,32 @@ const ResipesData = () => {
       <SecHeader />
       <div className="container mt-5 pe-5 ps-5">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="col-md-8 text-center m-auto">
+          <div className="col-md-8  m-auto">
             <div className="input-group mt-2">
               <input
-                {...register("name")}
+                {...register("name", {
+                  required: { value: true, message: "Name is required" },
+                })}
                 type="text"
                 className="form-control"
                 placeholder="Recipe Name"
-                aria-label="recipeName"
-                aria-describedby="basic-addon1"
+                defaultValue={editMode ? item.name : ""}
               />
-              {errors.name && (
-                <span className="text-danger">This field is required</span>
-              )}
             </div>
+            {errors.name && (
+              <span className="text-danger">{errors.name.message}</span>
+            )}
             <div className="input-group mt-2">
               <select
                 className="form-control"
                 id="tagId"
-                {...register("tagId")}
+                {...register("tagId", {
+                  required: {
+                    value: true,
+                    message: "Tag is required",
+                  },
+                })}
+                value={editMode ? item.tagId : ""}
               >
                 {tagId?.map((tag) => (
                   <option key={tag.id} value={tag.id}>
@@ -72,24 +121,37 @@ const ResipesData = () => {
                 ))}
               </select>
             </div>
+            {errors.tagId && (
+              <span className="text-danger">{errors.tagId.message}</span>
+            )}
             <div className="input-group mt-2">
               <input
-                {...register("price")}
+                {...register("price", {
+                  required: {
+                    value: true,
+                    message: "Price is required",
+                  },
+                })}
                 type="number"
                 className="form-control"
                 placeholder="Recipe price"
-                aria-label="recipePrice"
-                aria-describedby="basic-addon1"
+                defaultValue={editMode ? item.price : ""}
               />
-              {errors.price && (
-                <span className="text-danger">This field is required</span>
-              )}
             </div>
+            {errors.price && (
+              <span className="text-danger">{errors.price.message}</span>
+            )}
             <div className="input-group mt-2">
               <select
                 className="form-control"
                 id="cat"
-                {...register("categoriesIds")}
+                {...register("categoriesIds", {
+                  required: {
+                    value: true,
+                    message: "Category is required",
+                  },
+                })}
+                value={editMode ? item.categoriesIds : ""}
               >
                 {cat?.map((category) => (
                   <option key={category.id} value={category.id}>
@@ -98,32 +160,55 @@ const ResipesData = () => {
                 ))}
               </select>
             </div>
+            {errors.categoriesIds && (
+              <span className="text-danger">
+                {errors.categoriesIds.message}
+              </span>
+            )}
             <div className="input-group mt-2">
               <textarea
-                {...register("description")}
+                {...register("description", {
+                  required: {
+                    value: true,
+                    message: "Description is required",
+                  },
+                })}
                 className="form-control"
                 placeholder="Recipe description"
-                aria-label="recipeDescription"
-                aria-describedby="basic-addon1"
+                defaultValue={editMode ? item.description : ""}
               />
-              {errors.description && (
-                <span className="text-danger">This field is required</span>
-              )}
             </div>
+            {errors.description && (
+              <span className="text-danger">{errors.description.message}</span>
+            )}
             <div className="input-group mt-2">
               <input
-                {...register("recipeImage")}
+                {...register("recipeImage", {
+                  required: !editMode,
+                  message: "Image is required",
+                })}
                 type="file"
                 className="form-control"
-                placeholder="Enter your E-mail"
-                aria-label="Username"
-                aria-describedby="basic-addon1"
+                accept="image/*"
               />
+              {editMode && item.imagePath && (
+                <div className="mt-2 w-25 h-25 rounded-3">
+                  <img
+                    className="w-25 h-25 rounded-3"
+                    src={`https://upskilling-egypt.com:3006/${item.imagePath}`}
+                    alt="Current recipe"
+                  />
+                </div>
+              )}
             </div>
+            {errors.recipeImage && (
+              <span className="text-danger">{errors.recipeImage.message}</span>
+            )}
             <div className="mt-4 text-end">
               <button
+                onClick={() => navigate("/dashboard/recipes")}
                 type="button"
-                className="btn me-2  p-2 btn-outline-success fw-bold"
+                className="btn me-2  p-2 btn-outline-danger fw-bold"
               >
                 Cancel
               </button>
@@ -132,7 +217,7 @@ const ResipesData = () => {
                 type="submit"
                 className="btn ms-2 p-2 login-btn fw-bold"
               >
-                Save
+                {editMode ? "Update" : "Save"}
               </button>
             </div>
           </div>

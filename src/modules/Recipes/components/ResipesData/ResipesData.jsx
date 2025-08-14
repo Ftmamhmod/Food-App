@@ -1,20 +1,45 @@
 import { useForm } from "react-hook-form";
 import SecHeader from "../../../Shared/components/sec-header/SecHeader";
 import { addResipes } from "../../../../api/Resipes/Resipes";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { getCategories } from "../../../../api/Categories/Categories";
+import { useNavigate } from "react-router-dom";
 
 const ResipesData = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      name: "",
-    },
-  });
+  } = useForm();
   const onSubmit = (data) => {
     addResipes(data);
+    navigate("/dashboard/recipes");
   };
+  const [tagId, setTagId] = useState(null);
+  const [cat, setCat] = useState(null);
+  const getTagId = async () => {
+    try {
+      const response = await axios.get(
+        "https://upskilling-egypt.com:3006/api/v1/tag/",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setTagId(response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching tag ID:", error);
+    }
+  };
+
+  useEffect(() => {
+    getTagId();
+    getCategories(setCat);
+  }, []);
   return (
     <>
       <SecHeader />
@@ -40,9 +65,11 @@ const ResipesData = () => {
                 id="tagId"
                 {...register("tagId")}
               >
-                <option value="">1</option>
-                <option value="">2</option>
-                <option value="">6</option>
+                {tagId?.map((tag) => (
+                  <option key={tag.id} value={tag.id}>
+                    {tag.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="input-group mt-2">
@@ -62,11 +89,13 @@ const ResipesData = () => {
               <select
                 className="form-control"
                 id="cat"
-                {...register("categoryId")}
+                {...register("categoriesIds")}
               >
-                <option value="">1</option>
-                <option value="">2</option>
-                <option value="">5049</option>
+                {cat?.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="input-group mt-2">

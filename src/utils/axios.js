@@ -16,6 +16,7 @@ export const endpoints = {
         list: "/api/v1/Category/?pageSize=5&pageNumber=1",
         delete: "/api/v1/Category/{id}",
         create: "/api/v1/Category/",
+        update: "/api/v1/Category/{id}",
     },
     users: {
         list: "/api/v1/Users/?groups=1,2&pageSize=5&pageNumber=1"

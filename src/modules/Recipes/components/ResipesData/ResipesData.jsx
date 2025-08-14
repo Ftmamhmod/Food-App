@@ -23,7 +23,7 @@ const ResipesData = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     setValue,
   } = useForm({
     defaultValues: editMode
@@ -53,8 +53,9 @@ const ResipesData = () => {
       handleEditRecipe(item.id, appendToFormData(data));
       navigate("/dashboard/recipes");
     } else {
-      addResipes(appendToFormData(data));
-      navigate("/dashboard/recipes");
+      addResipes(appendToFormData(data)).then(() => {
+        navigate("/dashboard/recipes");
+      });
     }
   };
   const [tagId, setTagId] = useState(null);
@@ -216,6 +217,7 @@ const ResipesData = () => {
                 onClick={handleSubmit(onSubmit)}
                 type="submit"
                 className="btn ms-2 p-2 login-btn fw-bold"
+                disabled={isSubmitting}
               >
                 {editMode ? "Update" : "Save"}
               </button>

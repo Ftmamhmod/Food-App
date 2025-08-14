@@ -16,25 +16,21 @@ const CategoriesTable = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
 
-  // Function to handle edit icon click
   const handleEdit = (id) => {
     const categoryToEdit = categories.find((item) => item.id === id);
-    reset({ name: categoryToEdit.name }); // Pre-fill the form
+    reset({ name: categoryToEdit.name });
     setIsEdit(true);
     setSelectedItem(id);
   };
 
-  // Function to update form title
   const getFormTitle = () => (isEdit ? "Edit Category" : "Add Category");
 
-  // Update onSubmit function
   const onSubmit = (data) => {
     if (isEdit) {
-      // Handle edit logic
       updateCategory(selectedItem, data);
       setIsEdit(false);
+      reset();
     } else {
-      // Handle add logic
       addCategory(data);
     }
     getCategories(setCategories);
@@ -52,7 +48,12 @@ const CategoriesTable = () => {
     const updatedData = categories.filter((item) => item.id !== selectedItem);
     setCategories(updatedData);
   };
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm();
 
   return (
     <div>
@@ -92,6 +93,9 @@ const CategoriesTable = () => {
                     aria-describedby="basic-addon1"
                   />
                 </div>
+                {errors.name && (
+                  <span className="text-danger">{errors.name.message}</span>
+                )}
               </form>
             </div>
             <div className="modal-footer">
@@ -100,8 +104,9 @@ const CategoriesTable = () => {
                 type="button"
                 className="btn btn-success"
                 onClick={handleSubmit(onSubmit)}
+                disabled={isSubmitting}
               >
-                Save
+                {isEdit ? "Update" : "Save"}
               </button>
             </div>
           </div>

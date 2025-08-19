@@ -2,6 +2,9 @@ import axios from "axios";
 
 export const axiosInstance = axios.create({
     baseURL: "https://upskilling-egypt.com:3006",
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
 });
 
 export const endpoints = {

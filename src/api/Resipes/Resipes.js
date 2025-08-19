@@ -94,12 +94,7 @@ export const deleteResipes = async (id) => {
 };
 export const updateResipes = async (id, formData) => {
     try {
-        const response = await axiosInstance.put(endpoints.recipes.update.replace("{id}", id), formData, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-                "Content-Type": "multipart/form-data",
-            },
-        });
+        const response = await axiosInstance.put(endpoints.recipes.update.replace("{id}", id), formData,);
         getResipes()
         toast.success("Recipe updated successfully", {
             position: "top-right",

@@ -4,11 +4,7 @@ import { axiosInstance, endpoints } from "../../utils/axios";
 
 export const getCategories = async (setCategories) => {
     try {
-        const response = await axiosInstance.get(endpoints.categories.list, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-        });
+        const response = await axiosInstance.get(endpoints.categories.list,);
         setCategories(response.data.data);
     } catch (error) {
         console.error("Error fetching categories:", error);
@@ -18,11 +14,7 @@ export const getCategories = async (setCategories) => {
 
 export const deleteCategory = async (id) => {
     try {
-        const response = await axiosInstance.delete(endpoints.categories.delete.replace("{id}", id), {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-        });
+        const response = await axiosInstance.delete(endpoints.categories.delete.replace("{id}", id),);
         toast.success("Category deleted successfully", {
             position: "top-right",
             autoClose: 3000,
@@ -53,11 +45,7 @@ export const deleteCategory = async (id) => {
 };
 export const addCategory = async (categoryData) => {
     try {
-        const response = await axiosInstance.post(endpoints.categories.create, categoryData, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-        });
+        const response = await axiosInstance.post(endpoints.categories.create, categoryData,);
         toast.success("Category added successfully", {
             position: "top-right",
             autoClose: 3000,

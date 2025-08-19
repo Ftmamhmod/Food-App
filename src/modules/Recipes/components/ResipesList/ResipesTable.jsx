@@ -23,7 +23,6 @@ const ResipesTable = () => {
   const handleAdd = () => {
     navigate("/dashboard/recipe-data");
   };
-  console.log(recipes);
   const [selectedItem, setSelectedItem] = useState(null);
   const handleItemId = (id) => {
     setSelectedItem(id);

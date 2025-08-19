@@ -5,6 +5,7 @@ import List from "./../../../Shared/components/List/List";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
+  console.log(users);
   useEffect(() => {
     getUsers(setUsers);
   }, []);
@@ -20,6 +21,7 @@ const UserList = () => {
         paragraph={"You can check all details"}
         buttonText={"add"}
         data={users}
+        tableHeaderCell={["ID", "User name", "Email", "Country", "Phone"]}
       />
     </div>
   );

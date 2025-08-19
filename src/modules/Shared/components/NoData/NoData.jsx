@@ -2,7 +2,7 @@ import noData from "./../../../../assets/images/freepik--Character--inject-70.pn
 
 const NoData = () => {
   return (
-    <div className="text-center w-100 p-3">
+    <div className="text-center m-auto p-3">
       <img src={noData} alt="No Data" />
       <h4>No Data !</h4>
       <p className="text-muted">

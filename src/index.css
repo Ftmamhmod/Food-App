@@ -9,7 +9,7 @@ body {
       rgba(47, 140, 96, 0.5),
       rgba(0, 0, 0, 0.9)
     ),
-    url("./../src/assets/images/image\ 1.png");
+    url("/assets/images/image 1.png");
   background-size: cover;
   background-position: center center;
 }

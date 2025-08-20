@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getUsers } from "../../../../api/Users/Users";
 import Header from "../../../Shared/components/Header/Header";
-import List from "./../../../Shared/components/List/List";
+import List from "./List";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -21,7 +21,15 @@ const UserList = () => {
         paragraph={"You can check all details"}
         buttonText={"add"}
         data={users}
-        tableHeaderCell={["ID", "User name", "Email", "Country", "Phone"]}
+        tableHeaderCell={[
+          "ID",
+          "User name",
+          "Image",
+          "Email",
+          "Country",
+          "Phone",
+          "Action",
+        ]}
       />
     </div>
   );

@@ -1,8 +1,10 @@
-import NoData from "./../NoData/NoData";
 import deleteImg from "./../../../../assets/images/freepik--Character--inject-70.png";
 import { useState } from "react";
 import { deleteCategory } from "../../../../api/Categories/Categories";
 import { updateResipes } from "../../../../api/Resipes/Resipes";
+import NoData from "../../../Shared/components/NoData/NoData";
+import { baseImgURL } from "../../../../utils/axios";
+import userImg from "./../../../../assets/images/abstract-user-flat-4.png";
 
 const List = ({
   title,
@@ -95,11 +97,18 @@ const List = ({
               <tr key={item?.id}>
                 <td>{item?.id}</td>
                 <td>{item?.userName}</td>
-                <td>
-                  <img
-                    src={`https://upskilling-egypt.com:3006${item?.imagePath}`}
-                    alt=""
-                  />
+                <td className="w-25 h-25">
+                  <div className=" w-50 h-50 rounded-3">
+                    <img
+                      className="w-25 h-25 rounded-3"
+                      src={
+                        item?.imagePath
+                          ? `${baseImgURL}${item?.imagePath}`
+                          : userImg
+                      }
+                      alt=""
+                    />
+                  </div>
                 </td>
                 <td>{item?.email}</td>
                 <td>{item?.creationDate}</td>

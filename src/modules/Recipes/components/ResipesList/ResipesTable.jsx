@@ -4,6 +4,7 @@ import { deleteResipes, getResipes } from "../../../../api/Resipes/Resipes";
 import { useNavigate } from "react-router-dom";
 import DeleteModal from "../../../Shared/Delete-modal/DeleteModal";
 import resipeImg from "./../../../../assets/images/1041373.png";
+import { baseImgURL } from "../../../../utils/axios";
 
 const ResipesTable = () => {
   const navigate = useNavigate();
@@ -72,7 +73,7 @@ const ResipesTable = () => {
                       className="w-25 h-25 rounded-3"
                       src={
                         item?.imagePath
-                          ? `https://upskilling-egypt.com:3006/${item.imagePath}`
+                          ? `${baseImgURL}${item?.imagePath}`
                           : resipeImg
                       }
                       alt=""
@@ -81,7 +82,7 @@ const ResipesTable = () => {
                 </td>
                 <td>{item?.price}</td>
                 <td>{item?.description}</td>
-                <td>{item?.category[0].name}</td>
+                <td>{item?.category[0]?.name}</td>
 
                 <td className="cursor-pointer">
                   <i

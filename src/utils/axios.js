@@ -1,7 +1,7 @@
 import axios from "axios";
-
+export const baseImgURL = "https://upskilling-egypt.com:3006/";
 export const axiosInstance = axios.create({
-    baseURL: "https://upskilling-egypt.com:3006",
+    baseURL: "https://upskilling-egypt.com:3006/api/v1",
     headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
@@ -9,21 +9,21 @@ export const axiosInstance = axios.create({
 
 export const endpoints = {
     recipes: {
-        list: "/api/v1/Recipe/?pageSize=5&pageNumber=1",
-        delete: "/api/v1/Recipe/{id}",
-        create: "/api/v1/Recipe/",
-        update: "/api/v1/Recipe/{id}",
+        list: "/Recipe/",
+        delete: "/Recipe/{id}",
+        create: "/Recipe/",
+        update: "/Recipe/{id}",
 
     },
 
     categories: {
-        list: "/api/v1/Category/?pageSize=5&pageNumber=1",
-        delete: "/api/v1/Category/{id}",
-        create: "/api/v1/Category/",
-        update: "/api/v1/Category/{id}",
+        list: "/Category/",
+        delete: "/Category/{id}",
+        create: "/Category/",
+        update: "/Category/{id}",
     },
     users: {
-        list: "/api/v1/Users/?groups=1,2&pageSize=5&pageNumber=1"
+        list: "/Users/"
     }
 
 }

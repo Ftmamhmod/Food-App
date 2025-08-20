@@ -8,15 +8,7 @@ import { deleteUser } from "../../../../api/Users/Users";
 import DeleteModal from "./../../../Shared/Delete-modal/DeleteModal";
 import Loader from "../../../Shared/Loader/Loader";
 
-const List = ({
-  title,
-  paragraph,
-  buttonText,
-  data,
-  tableHeaderCell,
-  handleAdd,
-  isLoading,
-}) => {
+const List = ({ title, paragraph, data, tableHeaderCell, isLoading }) => {
   const [selectedItem, setSelectedItem] = useState(null);
 
   const handleItemId = (id) => {
@@ -37,17 +29,6 @@ const List = ({
         <div className="title-text pt-2 pb-2">
           <h4>{title}</h4>
           <p>{paragraph}</p>
-        </div>
-        <div>
-          <button
-            data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
-            onClick={handleAdd}
-            type="submit"
-            className=" btn w-100 pe-5 ps-5 pt-3 pb-3 login-btn  login-btn  "
-          >
-            {buttonText}
-          </button>
         </div>
       </div>
       <table className="table table-hover rounded-4 ">

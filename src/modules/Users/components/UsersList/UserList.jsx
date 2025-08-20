@@ -28,7 +28,6 @@ const UserList = () => {
         isLoading={isLoading}
         title={"Users Table Details"}
         paragraph={"You can check all details"}
-        buttonText={"add"}
         data={users}
         tableHeaderCell={[
           "ID",

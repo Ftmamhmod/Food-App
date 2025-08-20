@@ -114,8 +114,12 @@ const ResipesTable = () => {
           )}
         </tbody>
       </table>
-      <nav aria-label="Page navigation example " className="text-muted">
-        <ul className="pagination text-muted">
+      {/** Pagination */}
+      <nav
+        aria-label="Page navigation example"
+        className="d-flex justify-content-end"
+      >
+        <ul className="pagination">
           <li className="page-item text-muted">
             <a className="page-link text-muted" href="#">
               Previous
@@ -124,7 +128,11 @@ const ResipesTable = () => {
 
           {numberOfPages?.map((page) => (
             <li
-              onClick={() => {
+              onClick={(e) => {
+                document.querySelectorAll(".page-item").forEach((item) => {
+                  item.style.backgroundColor = "";
+                });
+                e.currentTarget.style.backgroundColor = "#f0f0f0";
                 getResipes(setRecipes, 5, page, (pages) => {
                   const pagesArray = Array.from(
                     { length: pages },

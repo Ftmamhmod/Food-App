@@ -3,17 +3,18 @@ import { axiosInstance, endpoints } from "../../utils/axios";
 import { toastConfig } from "../../utils/toast-config";
 
 
-export const getCategories = async (setCategories, pageSize, pageNumber) => {
+export const getCategories = async (setCategories, pageSize, numberOfPages, setTotalPages,) => {
     try {
         const response = await axiosInstance.get(endpoints.categories.list,
             {
                 params: {
                     pageSize,
-                    pageNumber
+                    pageNumber: numberOfPages
                 }
             }
         );
         setCategories(response.data.data);
+        setTotalPages(response.data.totalNumberOfPages);
     } catch (error) {
         console.error("Error fetching categories:", error);
         throw error;

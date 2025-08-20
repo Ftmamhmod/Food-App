@@ -35,8 +35,21 @@ const UserList = () => {
           "Action",
         ]}
       />
-      <nav aria-label="Page navigation example" className="text-muted">
+      {/* Pagination */}
+      <nav
+        aria-label="Page navigation example"
+        className="text-muted d-flex justify-content-end"
+      >
         <ul className="pagination">
+          <li className="page-item">
+            <a
+              className="page-link text-muted"
+              href="#"
+              onClick={() => setCurrentPage(1)}
+            >
+              «
+            </a>
+          </li>
           <li className="page-item">
             <a
               className="page-link text-muted"
@@ -49,8 +62,8 @@ const UserList = () => {
 
           {numberOfPages
             ?.slice(
-              Math.max(0, currentPage - 3),
-              Math.min(currentPage + 2, numberOfPages.length)
+              Math.max(0, Math.min(currentPage - 3, numberOfPages.length - 5)),
+              Math.max(5, Math.min(currentPage + 2, numberOfPages.length))
             )
             .map((page) => (
               <li
@@ -64,7 +77,9 @@ const UserList = () => {
                     setNumberOfPages(pagesArray);
                   });
                 }}
-                className={`page-item ${currentPage === page ? "active" : ""}`}
+                className={`page-item ${
+                  currentPage === page ? "active bg-light" : ""
+                }`}
                 key={page}
               >
                 <a className="page-link text-muted" href="#">
@@ -81,6 +96,15 @@ const UserList = () => {
               }
             >
               Next
+            </a>
+          </li>
+          <li className="page-item">
+            <a
+              className="page-link text-muted"
+              href="#"
+              onClick={() => setCurrentPage(numberOfPages.length)}
+            >
+              »
             </a>
           </li>
         </ul>

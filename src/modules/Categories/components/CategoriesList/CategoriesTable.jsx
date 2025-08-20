@@ -6,7 +6,6 @@ import {
   getCategories,
   updateCategory,
 } from "../../../../api/Categories/Categories";
-
 import DeleteModal from "../../../Shared/Delete-modal/DeleteModal";
 import { useForm } from "react-hook-form";
 
@@ -15,7 +14,8 @@ const CategoriesTable = () => {
   const [categories, setCategories] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
-
+  const [numberOfPages, setNumberOfPages] = useState([]);
+  console.log(numberOfPages);
   const handleEdit = (id) => {
     const categoryToEdit = categories.find((item) => item.id === id);
     reset({ name: categoryToEdit.name });
@@ -33,14 +33,20 @@ const CategoriesTable = () => {
     } else {
       addCategory(data);
     }
-    getCategories(setCategories, 5, 1);
+    getCategories(setCategories, 5, 1, (pages) => {
+      const pagesArray = Array.from({ length: pages }, (_, i) => i + 1);
+      setNumberOfPages(pagesArray);
+    });
     reset();
   };
   const handleItemId = (id) => {
     setSelectedItem(id);
   };
   useEffect(() => {
-    getCategories(setCategories);
+    getCategories(setCategories, 5, 1, (pages) => {
+      const pagesArray = Array.from({ length: pages }, (_, i) => i + 1);
+      setNumberOfPages(pagesArray);
+    });
   }, []);
 
   const handleDelete = () => {
@@ -169,6 +175,48 @@ const CategoriesTable = () => {
           )}
         </tbody>
       </table>
+      {/** Pagination */}
+      <nav
+        aria-label="Page navigation example"
+        className="d-flex justify-content-end"
+      >
+        <ul className="pagination">
+          <li className="page-item text-muted">
+            <a className="page-link text-muted" href="#">
+              Previous
+            </a>
+          </li>
+
+          {numberOfPages?.map((page) => (
+            <li
+              onClick={(e) => {
+                document.querySelectorAll(".page-item").forEach((item) => {
+                  item.style.backgroundColor = "";
+                });
+                e.currentTarget.style.backgroundColor = "#f0f0f0";
+                getCategories(setCategories, 5, page, (pages) => {
+                  const pagesArray = Array.from(
+                    { length: pages },
+                    (_, i) => i + 1
+                  );
+                  setNumberOfPages(pagesArray);
+                });
+              }}
+              className="page-item text-muted"
+              key={page}
+            >
+              <a className="page-link text-muted" href="#">
+                {page}
+              </a>
+            </li>
+          ))}
+          <li className="page-item">
+            <a className="page-link text-muted" href="#">
+              Next
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 };

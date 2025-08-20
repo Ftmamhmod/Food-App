@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import DeleteModal from "../../../Shared/Delete-modal/DeleteModal";
 import resipeImg from "./../../../../assets/images/1041373.png";
 import { baseImgURL } from "../../../../utils/axios";
+import Loader from "../../../Shared/Loader/Loader";
 
 const ResipesTable = () => {
   const navigate = useNavigate();
@@ -17,11 +18,14 @@ const ResipesTable = () => {
     "Actions",
   ];
   const [numberOfPages, setNumberOfPages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [recipes, setRecipes] = useState([]);
   useEffect(() => {
+    setIsLoading(true);
     getResipes(setRecipes, 5, 1, (pages) => {
       const pagesArray = Array.from({ length: pages }, (_, i) => i + 1);
       setNumberOfPages(pagesArray);
+      setIsLoading(false);
     });
   }, []);
   const handleAdd = () => {
@@ -66,7 +70,8 @@ const ResipesTable = () => {
           </tr>
         </thead>
         <tbody className="m-auto">
-          {recipes?.length > 0 ? (
+          {isLoading && <Loader />}
+          {recipes?.length > 0 &&
             recipes?.map((item) => (
               <tr key={item?.id}>
                 <td>{item?.name}</td>
@@ -104,10 +109,10 @@ const ResipesTable = () => {
                   ></i>
                 </td>
               </tr>
-            ))
-          ) : (
+            ))}
+          {recipes?.length === 0 && !isLoading && (
             <tr>
-              <td colSpan="3">
+              <td colSpan="4">
                 <NoData />
               </td>
             </tr>

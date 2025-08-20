@@ -6,6 +6,7 @@ import { baseImgURL } from "../../../../utils/axios";
 import userImg from "./../../../../assets/images/abstract-user-flat-4.png";
 import { deleteUser } from "../../../../api/Users/Users";
 import DeleteModal from "./../../../Shared/Delete-modal/DeleteModal";
+import Loader from "../../../Shared/Loader/Loader";
 
 const List = ({
   title,
@@ -14,8 +15,10 @@ const List = ({
   data,
   tableHeaderCell,
   handleAdd,
+  isLoading,
 }) => {
   const [selectedItem, setSelectedItem] = useState(null);
+
   const handleItemId = (id) => {
     setSelectedItem(id);
   };
@@ -56,7 +59,9 @@ const List = ({
           </tr>
         </thead>
         <tbody className="m-auto">
-          {data?.length > 0 ? (
+          {isLoading && <Loader />}
+          {data?.length > 0 &&
+            !isLoading &&
             data?.map((item) => (
               <tr key={item?.id}>
                 <td>{item?.id}</td>
@@ -93,10 +98,10 @@ const List = ({
                   ></i>
                 </td>
               </tr>
-            ))
-          ) : (
+            ))}
+          {data?.length === 0 && !isLoading && (
             <tr>
-              <td colSpan="3">
+              <td colSpan="7">
                 <NoData />
               </td>
             </tr>

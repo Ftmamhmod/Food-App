@@ -8,6 +8,7 @@ import {
 } from "../../../../api/Categories/Categories";
 import DeleteModal from "../../../Shared/Delete-modal/DeleteModal";
 import { useForm } from "react-hook-form";
+import Loader from "../../../Shared/Loader/Loader";
 
 const CategoriesTable = () => {
   const tableHeaderCell = ["Id", "Name", "Creation Date", "Actions"];
@@ -15,6 +16,7 @@ const CategoriesTable = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
   const [numberOfPages, setNumberOfPages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   console.log(numberOfPages);
   const handleEdit = (id) => {
     const categoryToEdit = categories.find((item) => item.id === id);
@@ -43,9 +45,11 @@ const CategoriesTable = () => {
     setSelectedItem(id);
   };
   useEffect(() => {
+    setIsLoading(true);
     getCategories(setCategories, 5, 1, (pages) => {
       const pagesArray = Array.from({ length: pages }, (_, i) => i + 1);
       setNumberOfPages(pagesArray);
+      setIsLoading(false);
     });
   }, []);
 
@@ -144,7 +148,9 @@ const CategoriesTable = () => {
           </tr>
         </thead>
         <tbody className="m-auto">
-          {categories?.length > 0 ? (
+          {isLoading && <Loader />}
+          {!isLoading &&
+            categories?.length > 0 &&
             categories?.map((item) => (
               <tr key={item?.id}>
                 <td>{item?.id}</td>
@@ -165,10 +171,10 @@ const CategoriesTable = () => {
                   ></i>
                 </td>
               </tr>
-            ))
-          ) : (
+            ))}
+          {categories?.length === 0 && !isLoading && (
             <tr>
-              <td colSpan="3">
+              <td colSpan="4">
                 <NoData />
               </td>
             </tr>

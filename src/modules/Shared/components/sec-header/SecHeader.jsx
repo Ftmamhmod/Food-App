@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 const SecHeader = () => {
   const navigate = useNavigate();
   return (
-    <div className="container bg-light-green  rounded-4  p-5 ">
+    <div className="container bg-light-green  rounded-4  pt-4 pb-4 ps-5 pe-5">
       <div className="row justify-content-between align-items-center">
         <div className="col-md-8 ">
           <div className="card-body">

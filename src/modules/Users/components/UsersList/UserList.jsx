@@ -67,8 +67,11 @@ const UserList = () => {
             )
             .map((page) => (
               <li
-                onClick={() => {
-                  setCurrentPage(page);
+                onClick={(e) => {
+                  document.querySelectorAll(".page-item").forEach((item) => {
+                    item.style.backgroundColor = "";
+                  });
+                  e.currentTarget.style.backgroundColor = "#f0f0f0";
                   getUsers(setUsers, 5, page, (pages) => {
                     const pagesArray = Array.from(
                       { length: pages },
@@ -77,9 +80,7 @@ const UserList = () => {
                     setNumberOfPages(pagesArray);
                   });
                 }}
-                className={`page-item ${
-                  currentPage === page ? "active bg-light" : ""
-                }`}
+                className="page-item text-muted"
                 key={page}
               >
                 <a className="page-link text-muted" href="#">

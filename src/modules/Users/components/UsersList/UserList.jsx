@@ -5,9 +5,13 @@ import List from "./List";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
-  console.log(users);
+  const [numberOfPages, setNumberOfPages] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
-    getUsers(setUsers);
+    getUsers(setUsers, 5, 1, (pages) => {
+      const pagesArray = Array.from({ length: pages }, (_, i) => i + 1);
+      setNumberOfPages(pagesArray);
+    });
   }, []);
   return (
     <div>
@@ -31,6 +35,56 @@ const UserList = () => {
           "Action",
         ]}
       />
+      <nav aria-label="Page navigation example" className="text-muted">
+        <ul className="pagination">
+          <li className="page-item">
+            <a
+              className="page-link text-muted"
+              href="#"
+              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+            >
+              Previous
+            </a>
+          </li>
+
+          {numberOfPages
+            ?.slice(
+              Math.max(0, currentPage - 3),
+              Math.min(currentPage + 2, numberOfPages.length)
+            )
+            .map((page) => (
+              <li
+                onClick={() => {
+                  setCurrentPage(page);
+                  getUsers(setUsers, 5, page, (pages) => {
+                    const pagesArray = Array.from(
+                      { length: pages },
+                      (_, i) => i + 1
+                    );
+                    setNumberOfPages(pagesArray);
+                  });
+                }}
+                className={`page-item ${currentPage === page ? "active" : ""}`}
+                key={page}
+              >
+                <a className="page-link text-muted" href="#">
+                  {page}
+                </a>
+              </li>
+            ))}
+          <li className="page-item">
+            <a
+              className="page-link text-muted"
+              href="#"
+              onClick={() =>
+                setCurrentPage(Math.min(numberOfPages.length, currentPage + 1))
+              }
+            >
+              Next
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 };

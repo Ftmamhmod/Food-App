@@ -23,7 +23,8 @@ export const endpoints = {
         update: "/Category/{id}",
     },
     users: {
-        list: "/Users/"
+        list: "/Users/",
+        delete: "/Users/{id}",
     }
 
 }

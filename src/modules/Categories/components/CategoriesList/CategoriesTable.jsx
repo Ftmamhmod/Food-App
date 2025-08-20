@@ -33,7 +33,7 @@ const CategoriesTable = () => {
     } else {
       addCategory(data);
     }
-    getCategories(setCategories);
+    getCategories(setCategories, 5, 1);
     reset();
   };
   const handleItemId = (id) => {

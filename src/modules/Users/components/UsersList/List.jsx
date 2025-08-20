@@ -1,10 +1,11 @@
-import deleteImg from "./../../../../assets/images/freepik--Character--inject-70.png";
 import { useState } from "react";
-import { deleteCategory } from "../../../../api/Categories/Categories";
+
 import { updateResipes } from "../../../../api/Resipes/Resipes";
 import NoData from "../../../Shared/components/NoData/NoData";
 import { baseImgURL } from "../../../../utils/axios";
 import userImg from "./../../../../assets/images/abstract-user-flat-4.png";
+import { deleteUser } from "../../../../api/Users/Users";
+import DeleteModal from "./../../../Shared/Delete-modal/DeleteModal";
 
 const List = ({
   title,
@@ -19,7 +20,7 @@ const List = ({
     setSelectedItem(id);
   };
   const handleDelete = () => {
-    deleteCategory(selectedItem);
+    deleteUser(selectedItem);
   };
 
   const handleEditRecipe = (id, updatedData) => {
@@ -27,44 +28,7 @@ const List = ({
   };
   return (
     <div>
-      <div
-        className="modal fade"
-        id="exampleModal"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body text-center">
-              {<img src={deleteImg} alt="Delete" />}
-              <h4>Delete This User ?</h4>
-              <p className="text-muted">
-                are you sure you want to delete this item ? if you are sure just
-                click on delete it
-              </p>
-            </div>
-            <div className="modal-footer">
-              <button
-                data-bs-dismiss="modal"
-                type="button"
-                className="btn btn-outline-danger"
-                onClick={handleDelete}
-              >
-                Delete this item
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <DeleteModal handleDelete={handleDelete} itemName={"user"} />
 
       <div className="title d-flex justify-content-between align-items-center p-2 mt-2 mb-2">
         <div className="title-text pt-2 pb-2">

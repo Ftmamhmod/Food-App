@@ -1,5 +1,4 @@
 import Header from "../../../Shared/components/Header/Header";
-import List from "./../../../Shared/components/List/List";
 import ResipesTable from "./ResipesTable";
 
 const ResipesList = () => {

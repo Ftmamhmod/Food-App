@@ -3,13 +3,13 @@ import { axiosInstance, endpoints } from "../../utils/axios";
 import { toastConfig } from "../../utils/toast-config";
 
 
-export const getCategories = async (setCategories) => {
+export const getCategories = async (setCategories, pageSize, pageNumber) => {
     try {
         const response = await axiosInstance.get(endpoints.categories.list,
             {
                 params: {
-                    pageSize: 5,
-                    pageNumber: 1
+                    pageSize,
+                    pageNumber
                 }
             }
         );

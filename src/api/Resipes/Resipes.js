@@ -3,16 +3,16 @@ import { axiosInstance, endpoints } from "../../utils/axios";
 import { toastConfig } from "../../utils/toast-config";
 
 
-
-export const getResipes = async (setResipes) => {
+export const getResipes = async (setResipes, pageSize, numberOfPages, setTotalPages) => {
     try {
         const response = await axiosInstance.get(endpoints.recipes.list, {
             params: {
-                pageSize: 5,
-                pageNumber: 1
+                pageSize,
+                pageNumber: numberOfPages
             }
         });
         setResipes(response.data.data);
+        setTotalPages(response.data.totalNumberOfPages);
         return response.data.data;
     } catch (error) {
         console.error("Error fetching recipes:", error);

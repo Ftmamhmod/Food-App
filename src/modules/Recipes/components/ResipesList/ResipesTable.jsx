@@ -16,10 +16,13 @@ const ResipesTable = () => {
     "Category",
     "Actions",
   ];
-
+  const [numberOfPages, setNumberOfPages] = useState([]);
   const [recipes, setRecipes] = useState([]);
   useEffect(() => {
-    getResipes(setRecipes);
+    getResipes(setRecipes, 5, 1, (pages) => {
+      const pagesArray = Array.from({ length: pages }, (_, i) => i + 1);
+      setNumberOfPages(pagesArray);
+    });
   }, []);
   const handleAdd = () => {
     navigate("/dashboard/recipe-data");
@@ -111,6 +114,40 @@ const ResipesTable = () => {
           )}
         </tbody>
       </table>
+      <nav aria-label="Page navigation example " className="text-muted">
+        <ul className="pagination text-muted">
+          <li className="page-item text-muted">
+            <a className="page-link text-muted" href="#">
+              Previous
+            </a>
+          </li>
+
+          {numberOfPages?.map((page) => (
+            <li
+              onClick={() => {
+                getResipes(setRecipes, 5, page, (pages) => {
+                  const pagesArray = Array.from(
+                    { length: pages },
+                    (_, i) => i + 1
+                  );
+                  setNumberOfPages(pagesArray);
+                });
+              }}
+              className="page-item text-muted"
+              key={page}
+            >
+              <a className="page-link text-muted" href="#">
+                {page}
+              </a>
+            </li>
+          ))}
+          <li className="page-item">
+            <a className="page-link text-muted" href="#">
+              Next
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 };

@@ -20,6 +20,20 @@ const ResipesTable = () => {
   const [numberOfPages, setNumberOfPages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [recipes, setRecipes] = useState([]);
+  const getNameValue = (e) => {
+    const value = e.target.value.toLowerCase();
+    const filteredRecipes = recipes.filter((recipe) =>
+      recipe.name.toLowerCase().includes(value)
+    );
+    if (value === "") {
+      getResipes(setRecipes, 5, 1, (pages) => {
+        const pagesArray = Array.from({ length: pages }, (_, i) => i + 1);
+        setNumberOfPages(pagesArray);
+      });
+    } else {
+      setRecipes(filteredRecipes);
+    }
+  };
   useEffect(() => {
     setIsLoading(true);
     getResipes(setRecipes, 5, 1, (pages) => {
@@ -61,6 +75,12 @@ const ResipesTable = () => {
           </button>
         </div>
       </div>
+      <input
+        className="form-control mb-3"
+        type="text"
+        placeholder="Search by name..."
+        onChange={getNameValue}
+      />
       <table className="table table-hover rounded-4 ">
         <thead className="table-light ">
           <tr>
@@ -92,21 +112,24 @@ const ResipesTable = () => {
                 <td>{item?.description}</td>
                 <td>{item?.category[0]?.name}</td>
 
-                <td className="cursor-pointer">
-                  <i
+                <td>
+                  <button
                     onClick={() =>
                       navigate(`/dashboard/recipe-data`, {
                         state: { recipeData: item },
                       })
                     }
-                    className="fa-solid fa-edit p-1 "
-                  ></i>
-                  <i
-                    onClick={() => handleItemId(item.id)}
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                    className="fa-solid fa-trash text-danger p-1"
-                  ></i>
+                    className="btn"
+                  >
+                    <i className="fa-solid fa-edit"></i>
+                  </button>
+                  <button onClick={() => handleItemId(item.id)} className="btn">
+                    <i
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      className="fa-solid fa-trash text-danger "
+                    ></i>
+                  </button>
                 </td>
               </tr>
             ))}

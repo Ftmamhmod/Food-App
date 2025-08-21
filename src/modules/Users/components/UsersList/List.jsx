@@ -8,7 +8,14 @@ import { deleteUser } from "../../../../api/Users/Users";
 import DeleteModal from "./../../../Shared/Delete-modal/DeleteModal";
 import Loader from "../../../Shared/Loader/Loader";
 
-const List = ({ title, paragraph, data, tableHeaderCell, isLoading }) => {
+const List = ({
+  title,
+  paragraph,
+  data,
+  tableHeaderCell,
+  isLoading,
+  getNameValue,
+}) => {
   const [selectedItem, setSelectedItem] = useState(null);
 
   const handleItemId = (id) => {
@@ -31,6 +38,12 @@ const List = ({ title, paragraph, data, tableHeaderCell, isLoading }) => {
           <p>{paragraph}</p>
         </div>
       </div>
+      <input
+        className="form-control mb-3"
+        type="text"
+        placeholder="Search by name..."
+        onChange={getNameValue}
+      />
       <table className="table table-hover rounded-4 ">
         <thead className="table-light ">
           <tr>

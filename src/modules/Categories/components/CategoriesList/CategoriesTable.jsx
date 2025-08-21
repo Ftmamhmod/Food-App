@@ -24,7 +24,20 @@ const CategoriesTable = () => {
     setIsEdit(true);
     setSelectedItem(id);
   };
-
+  const getNameValue = (e) => {
+    const value = e.target.value.toLowerCase();
+    const filteredCategories = categories.filter((category) =>
+      category.name.toLowerCase().includes(value)
+    );
+    if (value === "") {
+      getCategories(setCategories, 5, 1, (pages) => {
+        const pagesArray = Array.from({ length: pages }, (_, i) => i + 1);
+        setNumberOfPages(pagesArray);
+      });
+    } else {
+      setCategories(filteredCategories);
+    }
+  };
   const getFormTitle = () => (isEdit ? "Edit Category" : "Add Category");
 
   const onSubmit = (data) => {
@@ -139,6 +152,12 @@ const CategoriesTable = () => {
           </button>
         </div>
       </div>
+      <input
+        className="form-control mb-3"
+        type="text"
+        placeholder="Search by name..."
+        onChange={getNameValue}
+      />
       <table className="table table-hover rounded-4 ">
         <thead className="table-light ">
           <tr>
@@ -156,19 +175,21 @@ const CategoriesTable = () => {
                 <td>{item?.id}</td>
                 <td>{item?.name}</td>
                 <td>{item?.creationDate}</td>
-                <td className="cursor-pointer">
-                  <i
-                    onClick={() => handleEdit(item.id)}
-                    data-bs-toggle="modal"
-                    data-bs-target="#staticBackdrop"
-                    className="fa-solid fa-edit p-1 "
-                  ></i>
-                  <i
-                    onClick={() => handleItemId(item.id)}
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                    className="fa-solid fa-trash text-danger p-1"
-                  ></i>
+                <td>
+                  <button onClick={() => handleEdit(item.id)} className="btn">
+                    <i
+                      data-bs-toggle="modal"
+                      data-bs-target="#staticBackdrop"
+                      className="fa-solid fa-edit "
+                    ></i>
+                  </button>
+                  <button onClick={() => handleItemId(item.id)} className="btn">
+                    <i
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      className="fa-solid fa-trash text-danger "
+                    ></i>
+                  </button>
                 </td>
               </tr>
             ))}

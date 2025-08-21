@@ -17,6 +17,23 @@ const UserList = () => {
       setIsLoading(false);
     });
   }, []);
+  const getNameValue = (e) => {
+    const value = e.target.value.toLowerCase();
+    if (value === "") {
+      getUsers(setUsers, 5, currentPage, (pages) => {
+        const pagesArray = Array.from({ length: pages }, (_, i) => i + 1);
+        setNumberOfPages(pagesArray);
+      });
+    } else {
+      const filteredUsers = users.filter((user) =>
+        user?.name?.toLowerCase().includes(value)
+      );
+      const searchResults = filteredUsers.length > 0 ? filteredUsers : [];
+      setUsers(searchResults);
+      setNumberOfPages([1]);
+      setCurrentPage(1);
+    }
+  };
   return (
     <div>
       <title>User List</title>
@@ -38,6 +55,7 @@ const UserList = () => {
           "Phone",
           "Action",
         ]}
+        getNameValue={getNameValue}
       />
       {/* Pagination */}
       <nav

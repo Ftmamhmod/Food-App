@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
+import { toastConfig } from "../../../../utils/toast-config";
 
 const Login = ({ handleLogin }) => {
   const navigate = useNavigate();
@@ -19,31 +20,11 @@ const Login = ({ handleLogin }) => {
         data
       );
       localStorage.setItem("token", response.data.token);
-      toast.success("Login successful!", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Bounce,
-      });
+      toast.success("Login successful!", toastConfig);
       navigate("/dashboard");
       handleLogin();
     } catch (error) {
-      toast.error(`Login failed. ${error.response.data.message}`, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Bounce,
-      });
+      toast.error(`Login failed. ${error.response.data.message}`, toastConfig);
     }
   };
   if (localStorage.getItem("token")) {

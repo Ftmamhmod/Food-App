@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
+import { toastConfig } from "../../../../utils/toast-config";
 
 const ResetPass = () => {
   const location = useLocation();
@@ -24,30 +25,13 @@ const ResetPass = () => {
         "https://upskilling-egypt.com:3006/api/v1/Users/Reset",
         data
       );
-      toast.success(response.data.message, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Bounce,
-      });
+      toast.success(response.data.message, toastConfig);
       navigate("/login");
     } catch (error) {
-      toast.error(`Reset password failed. ${error.response.data.message}`, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Bounce,
-      });
+      toast.error(
+        `Reset password failed. ${error.response.data.message}`,
+        toastConfig
+      );
     }
   };
   return (

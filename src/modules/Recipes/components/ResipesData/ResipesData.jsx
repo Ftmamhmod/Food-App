@@ -113,10 +113,14 @@ const ResipesData = () => {
                     message: "Tag is required",
                   },
                 })}
-                value={editMode ? item.tagId : ""}
               >
+                <option value="">Select a tag</option>
                 {tagId?.map((tag) => (
-                  <option key={tag.id} value={tag.id}>
+                  <option
+                    key={tag.id}
+                    value={tag.id}
+                    selected={editMode && item.tagId === tag.id}
+                  >
                     {tag.name}
                   </option>
                 ))}
@@ -131,6 +135,10 @@ const ResipesData = () => {
                   required: {
                     value: true,
                     message: "Price is required",
+                  },
+                  min: {
+                    value: 0,
+                    message: "Price cannot be negative",
                   },
                 })}
                 type="number"
@@ -152,10 +160,14 @@ const ResipesData = () => {
                     message: "Category is required",
                   },
                 })}
-                value={editMode ? item.categoriesIds : ""}
               >
+                <option value="">Select a category</option>
                 {cat?.map((category) => (
-                  <option key={category.id} value={category.id}>
+                  <option
+                    key={category.id}
+                    value={category.id}
+                    selected={editMode && item.categoriesIds === category.id}
+                  >
                     {category.name}
                   </option>
                 ))}

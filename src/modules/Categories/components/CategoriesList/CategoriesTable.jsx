@@ -17,7 +17,6 @@ const CategoriesTable = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [numberOfPages, setNumberOfPages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  console.log(numberOfPages);
   const handleEdit = (id) => {
     const categoryToEdit = categories.find((item) => item.id === id);
     reset({ name: categoryToEdit.name });

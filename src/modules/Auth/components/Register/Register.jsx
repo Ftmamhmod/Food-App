@@ -2,6 +2,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
+import { toastConfig } from "../../../../utils/toast-config";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -16,30 +17,13 @@ const Register = () => {
         "https://upskilling-egypt.com:3006/api/v1/Users/Register",
         data
       );
-      toast.success("Register successful!", response.data.message, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Bounce,
-      });
+      toast.success("Register successful!", response.data.message, toastConfig);
       navigate("/verify-account");
     } catch (error) {
-      toast.error(`Register failed. ${error.response.data.message}`, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Bounce,
-      });
+      toast.error(
+        `Register failed. ${error.response.data.message}`,
+        toastConfig
+      );
     }
   };
   return (

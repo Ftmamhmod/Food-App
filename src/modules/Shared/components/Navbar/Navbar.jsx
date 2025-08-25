@@ -1,21 +1,20 @@
 const Navbar = ({ loginUser }) => {
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary  rounded-4 ">
-        <div className="container-fluid d-flex justify-content-between">
-          <div className="col-md-8">
-            <form className="w-100 p-1 " role="search">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary rounded-4">
+        <div className="container-fluid">
+          <div className="col-12 col-md-8 mb-2 mb-lg-0 ">
+            <form className="w-100 p-1" role="search">
               <input
-                className="form-control  rounded-5"
+                className="form-control rounded-5"
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
               />
             </form>
           </div>
-
-          <div className=" col-md-2 " id="navbarSupportedContent">
-            <div className="d-flex align-items-center">
+          <div className="col-12 col-md-4 col-lg-2">
+            <div className="d-flex align-items-center justify-content-center justify-content-md-end">
               {loginUser?.profilePic ? (
                 <img
                   src={loginUser.profilePic}
@@ -29,8 +28,7 @@ const Navbar = ({ loginUser }) => {
                   style={{ fontSize: "30px" }}
                 ></i>
               )}
-
-              <ul className="navbar-nav ">
+              <ul className="navbar-nav">
                 <li className="nav-item dropdown">
                   <a
                     className="nav-link dropdown-toggle"
@@ -41,7 +39,7 @@ const Navbar = ({ loginUser }) => {
                   >
                     {loginUser ? loginUser?.userName : "User"}
                   </a>
-                  <ul className="dropdown-menu">
+                  <ul className="dropdown-menu dropdown-menu-end">
                     <li>
                       <a className="dropdown-item" href="#">
                         Action

@@ -69,7 +69,7 @@ const ResipesTable = () => {
             data-bs-target="#staticBackdrop"
             onClick={handleAdd}
             type="submit"
-            className=" btn w-100 pe-5 ps-5 pt-3 pb-3 login-btn  login-btn  "
+            className="btn w-100 pe-3 pe-md-5 ps-3 ps-md-5 pt-2 pt-md-3 pb-2 pb-md-3 login-btn"
           >
             Add New Item
           </button>
@@ -81,68 +81,74 @@ const ResipesTable = () => {
         placeholder="Search by name..."
         onChange={getNameValue}
       />
-      <table className="table table-hover rounded-4 ">
-        <thead className="table-light ">
-          <tr>
-            {tableHeaderCell?.map((cell, index) => (
-              <th key={index}>{cell}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="m-auto">
-          {isLoading && <Loader />}
-          {recipes?.length > 0 &&
-            recipes?.map((item) => (
-              <tr key={item?.id}>
-                <td>{item?.name}</td>
-                <td className="w-25 h-25">
-                  <div className=" w-50 h-50 rounded-3">
-                    <img
-                      className="w-25 h-25 rounded-3"
-                      src={
-                        item?.imagePath
-                          ? `${baseImgURL}${item?.imagePath}`
-                          : resipeImg
-                      }
-                      alt=""
-                    />
-                  </div>
-                </td>
-                <td>{item?.price}</td>
-                <td>{item?.description}</td>
-                <td>{item?.category[0]?.name}</td>
-
-                <td>
-                  <button
-                    onClick={() =>
-                      navigate(`/dashboard/recipe-data`, {
-                        state: { recipeData: item },
-                      })
-                    }
-                    className="btn"
-                  >
-                    <i className="fa-solid fa-edit"></i>
-                  </button>
-                  <button onClick={() => handleItemId(item.id)} className="btn">
-                    <i
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
-                      className="fa-solid fa-trash text-danger "
-                    ></i>
-                  </button>
+      <div className="table-responsive">
+        <table className="table table-hover rounded-4">
+          <thead className="table-light">
+            <tr>
+              {tableHeaderCell?.map((cell, index) => (
+                <th key={index}>{cell}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="m-auto">
+            {isLoading && <Loader />}
+            {recipes?.length > 0 &&
+              recipes?.map((item) => (
+                <tr key={item?.id}>
+                  <td className="text-nowrap">{item?.name}</td>
+                  <td>
+                    <div className="img-container">
+                      <img
+                        className="w-25 h-25 rounded-3"
+                        style={{ maxWidth: "100px" }}
+                        src={
+                          item?.imagePath
+                            ? `${baseImgURL}${item?.imagePath}`
+                            : resipeImg
+                        }
+                        alt=""
+                      />
+                    </div>
+                  </td>
+                  <td className="text-nowrap">{item?.price}</td>
+                  <td className="text-break">{item?.description}</td>
+                  <td className="text-nowrap">{item?.category[0]?.name}</td>
+                  <td className="text-nowrap">
+                    <div className="d-flex gap-2">
+                      <button
+                        onClick={() =>
+                          navigate(`/dashboard/recipe-data`, {
+                            state: { recipeData: item },
+                          })
+                        }
+                        className="btn btn-sm "
+                      >
+                        <i className="fa-solid fa-edit"></i>
+                      </button>
+                      <button
+                        onClick={() => handleItemId(item.id)}
+                        className="btn btn-sm "
+                      >
+                        <i
+                          data-bs-toggle="modal"
+                          data-bs-target="#exampleModal"
+                          className="fa-solid fa-trash text-danger"
+                        ></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            {recipes?.length === 0 && !isLoading && (
+              <tr>
+                <td colSpan="6">
+                  <NoData />
                 </td>
               </tr>
-            ))}
-          {recipes?.length === 0 && !isLoading && (
-            <tr>
-              <td colSpan="4">
-                <NoData />
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-      {/** Pagination */}
+            )}
+          </tbody>
+        </table>
+      </div>
       <nav
         aria-label="Page navigation example"
         className="d-flex justify-content-end"
@@ -153,7 +159,6 @@ const ResipesTable = () => {
               Previous
             </a>
           </li>
-
           {numberOfPages?.map((page) => (
             <li
               onClick={(e) => {

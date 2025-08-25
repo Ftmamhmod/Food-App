@@ -29,8 +29,8 @@
 .sidebar-container .ps-sidebar-root {
   background-color: rgba(31, 38, 62, 1);
   color: white;
-  min-height: 120vh;
-  height: auto;
+  height: 100%;
+  min-height: 100vh;
   border-top-right-radius: 45px;
 }
 

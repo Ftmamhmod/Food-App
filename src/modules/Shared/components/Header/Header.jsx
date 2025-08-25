@@ -4,17 +4,18 @@ import homeImg from "./../../../../assets/images/eating vegan food-rafiki.png";
 const Header = ({ title, pargraph }) => {
   const { pathname } = useLocation();
   return (
-    <div className="container bg-main  rounded-4 text-white ps-5 pe-5 ">
+    <div className="container-fluid bg-main rounded-4 text-white px-4 py-3">
       <div className="row justify-content-between align-items-center">
-        <div className="col-md-8 ">
+        <div className="col-md-8 col-sm-12 text-center text-md-start">
           <div className="card-body">
-            <h2 className="fw-bold ">{title}</h2>
+            <h2 className="fw-bold">{title}</h2>
             <p className="lead mb-4">{pargraph}</p>
           </div>
         </div>
-        <div className="col-md-4 text-end">
+        <div className="col-md-4 col-sm-12 text-center">
           <img
-            className="w-fluid"
+            className="img-fluid"
+            style={{ maxWidth: "100%", height: "auto" }}
             src={pathname === "/dashboard" ? homeImg : mainImg}
             alt=""
           />

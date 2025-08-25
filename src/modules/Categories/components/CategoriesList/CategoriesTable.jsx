@@ -145,7 +145,7 @@ const CategoriesTable = () => {
             data-bs-toggle="modal"
             data-bs-target="#staticBackdrop"
             type="submit"
-            className=" btn w-100 pe-5 ps-5 pt-3 pb-3 login-btn  login-btn  "
+            className="btn w-100 pe-3 pe-md-5 ps-3 ps-md-5 pt-2 pt-md-3 pb-2 pb-md-3 login-btn"
           >
             Add New Category
           </button>
@@ -157,50 +157,55 @@ const CategoriesTable = () => {
         placeholder="Search by name..."
         onChange={getNameValue}
       />
-      <table className="table table-hover rounded-4 ">
-        <thead className="table-light ">
-          <tr>
-            {tableHeaderCell?.map((cell, index) => (
-              <th key={index}>{cell}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="m-auto">
-          {isLoading && <Loader />}
-          {!isLoading &&
-            categories?.length > 0 &&
-            categories?.map((item) => (
-              <tr key={item?.id}>
-                <td>{item?.id}</td>
-                <td>{item?.name}</td>
-                <td>{item?.creationDate}</td>
-                <td>
-                  <button onClick={() => handleEdit(item.id)} className="btn">
-                    <i
-                      data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop"
-                      className="fa-solid fa-edit "
-                    ></i>
-                  </button>
-                  <button onClick={() => handleItemId(item.id)} className="btn">
-                    <i
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
-                      className="fa-solid fa-trash text-danger "
-                    ></i>
-                  </button>
+      <div className="table-responsive">
+        <table className="table table-hover rounded-4 ">
+          <thead className="table-light ">
+            <tr>
+              {tableHeaderCell?.map((cell, index) => (
+                <th key={index}>{cell}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="m-auto">
+            {isLoading && <Loader />}
+            {!isLoading &&
+              categories?.length > 0 &&
+              categories?.map((item) => (
+                <tr key={item?.id}>
+                  <td>{item?.id}</td>
+                  <td>{item?.name}</td>
+                  <td>{item?.creationDate}</td>
+                  <td>
+                    <button onClick={() => handleEdit(item.id)} className="btn">
+                      <i
+                        data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop"
+                        className="fa-solid fa-edit "
+                      ></i>
+                    </button>
+                    <button
+                      onClick={() => handleItemId(item.id)}
+                      className="btn"
+                    >
+                      <i
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        className="fa-solid fa-trash text-danger "
+                      ></i>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            {categories?.length === 0 && !isLoading && (
+              <tr>
+                <td colSpan="4">
+                  <NoData />
                 </td>
               </tr>
-            ))}
-          {categories?.length === 0 && !isLoading && (
-            <tr>
-              <td colSpan="4">
-                <NoData />
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            )}
+          </tbody>
+        </table>
+      </div>
       {/** Pagination */}
       <nav
         aria-label="Page navigation example"

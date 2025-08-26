@@ -44,36 +44,38 @@ const FavoritesTable = () => {
           type="text"
           placeholder="Search by name..."
         />
-        <div className="row">
+        <div className="row g-4">
           {isLoading && <Loader />}
           {favorites?.length == 0 && <NoData />}
           {favorites?.map((item) => (
-            <div
-              className="col-md-4 shadow-sm rounded-4 "
-              key={item?.recipe?.id}
-            >
-              <div className="w-100 h-50 rounded-4 overflow-hidden position-relative">
-                <div className="text-center position-absolute bg-white  end-0 m-2 rounded-5">
-                  <button
-                    className="btn"
-                    onClick={() => handleDelete(item?.id)}
-                  >
-                    <i className="fa fa-heart text-danger  "></i>
-                  </button>
+            <div className="col-lg-4 col-md-6 col-sm-12" key={item?.recipe?.id}>
+              <div className="card h-100 shadow-sm rounded-4">
+                <div className="position-relative">
+                  <div className="position-absolute top-0 end-0 m-2">
+                    <button
+                      className="btn btn-light rounded-circle"
+                      onClick={() => handleDelete(item?.id)}
+                    >
+                      <i className="fa fa-heart text-danger"></i>
+                    </button>
+                  </div>
+                  <div className="h-100 overflow-hidden">
+                    <img
+                      className=" card-img-top img-fluid rounded-top-4 "
+                      src={
+                        item?.recipe?.imagePath
+                          ? `${baseImgURL}${item?.recipe?.imagePath}`
+                          : resipeImg
+                      }
+                      alt={item?.recipe?.name}
+                    />
+                  </div>
                 </div>
-
-                <img
-                  className="img-fluid rounded-4 w-100"
-                  src={
-                    item?.recipe?.imagePath
-                      ? `${baseImgURL}${item?.recipe?.imagePath}`
-                      : resipeImg
-                  }
-                  alt={item?.recipe?.name}
-                />
+                <div className="card-body">
+                  <h4 className="card-title">{item?.recipe?.name}</h4>
+                  <p className="card-text">{item?.recipe?.description}</p>
+                </div>
               </div>
-              <h4 className="pt-3">{item?.recipe?.name}</h4>
-              <p className="pt-3">{item?.recipe?.description}</p>
             </div>
           ))}
         </div>

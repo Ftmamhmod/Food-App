@@ -14,7 +14,7 @@ const ForgetPass = () => {
   const onSubmit = async (data) => {
     try {
       const response = await axiosInstance.post(
-        endpoints.users.forgotPassword,
+        endpoints.users.forgetPassword,
         data
       );
       toast.success(response.data.message, toastConfig);

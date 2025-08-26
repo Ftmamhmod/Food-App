@@ -63,7 +63,7 @@ const SideBar = ({ handleLogout }) => {
             </MenuItem>
             <MenuItem
               icon={<i className="fa fa-key"></i>}
-              component={<Link to={"/change-password"} />}
+              component={<Link to={"/dashboard/change-password"} />}
             >
               Change Password
             </MenuItem>

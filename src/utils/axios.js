@@ -28,7 +28,8 @@ export const endpoints = {
         delete: "/Users/{id}",
         register: "/Users/Register",
         changePassword: "/Users/ChangePassword",
-        forgetPassword: "/Users/ForgetPassword",
+        resetPassword: "/Users/Reset",
+        forgetPassword: "/Users/Reset/Request",
         login: "/Users/Login"
     }
 

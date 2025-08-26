@@ -1,8 +1,9 @@
-import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
+import { Sidebar as ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import logo from "./../../../../assets/images/3.png";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-const SideBar = ({ handleLogout }) => {
+
+const Sidebar = ({ handleLogout }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const handleToggle = () => {
     setIsCollapsed(!isCollapsed);
@@ -25,7 +26,7 @@ const SideBar = ({ handleLogout }) => {
 
   return (
     <div className="sidebar-container fixed h-100">
-      <Sidebar collapsed={isCollapsed}>
+      <ProSidebar collapsed={isCollapsed}>
         <Menu>
           <img
             className="w-100 pt-4"
@@ -74,9 +75,8 @@ const SideBar = ({ handleLogout }) => {
             </MenuItem>
           </div>
         </Menu>
-      </Sidebar>
+      </ProSidebar>
     </div>
   );
 };
-
-export default SideBar;
+export default Sidebar;

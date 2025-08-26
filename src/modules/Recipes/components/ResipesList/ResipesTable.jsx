@@ -43,9 +43,6 @@ const ResipesTable = () => {
       setNumberOfPages(pagesArray);
       setIsLoading(false);
     });
-    if (loginUser?.userGroup != "SuperAdmin") {
-      navigate("/dashboard");
-    }
   }, []);
   const handleAdd = () => {
     navigate("/dashboard/recipe-data");

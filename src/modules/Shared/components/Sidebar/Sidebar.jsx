@@ -3,7 +3,7 @@ import logo from "./../../../../assets/images/3.png";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-const Sidebar = ({ handleLogout }) => {
+const SideBar = ({ handleLogout }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const handleToggle = () => {
     setIsCollapsed(!isCollapsed);
@@ -79,4 +79,4 @@ const Sidebar = ({ handleLogout }) => {
     </div>
   );
 };
-export default Sidebar;
+export default SideBar;

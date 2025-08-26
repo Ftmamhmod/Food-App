@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
 import { toastConfig } from "../../../../utils/toast-config";
 import { axiosInstance, endpoints } from "../../../../utils/axios";
+import { AuthContext } from "../../../../context/AuthContext";
 
-const Login = ({ handleLogin }) => {
+const Login = () => {
+  const { handleLogin } = useContext(AuthContext);
   const navigate = useNavigate();
   const {
     register,

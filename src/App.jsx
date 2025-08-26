@@ -23,22 +23,15 @@ import UserList from "./modules/Users/components/UsersList/UserList";
 import Login from "./modules/Auth/components/Login/Login";
 import Register from "./modules/Auth/components/Register/Register";
 import ResipesList from "./modules/Recipes/components/ResipesList/ResipesList";
-import { useEffect, useState } from "react";
-import { jwtDecode } from "jwt-decode";
+import { useContext } from "react";
+
 import ProtectedRouted from "./modules/Shared/ProtectedRouted/ProtectedRouted";
 import { Bounce, toast } from "react-toastify";
+import { AuthContext } from "./context/AuthContext";
 
 function App() {
-  const [loginUser, setLoginUser] = useState(null);
-  const handleLogin = () => {
-    const encode = localStorage.getItem("token");
+  const { loginUser, setLoginUser } = useContext(AuthContext);
 
-    if (encode) {
-      const decode = jwtDecode(encode);
-
-      setLoginUser(decode);
-    }
-  };
   const handleLogout = () => {
     localStorage.removeItem("token");
     <Navigate to="/login" />;
@@ -56,18 +49,14 @@ function App() {
     });
   };
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) handleLogin();
-  }, []);
-
   const routes = createBrowserRouter([
     {
       path: "",
       element: <AuthLayout />,
       errorElement: <NotFound />,
       children: [
-        { path: "", element: <Login handleLogin={handleLogin} /> },
-        { path: "login", element: <Login handleLogin={handleLogin} /> },
+        { path: "", element: <Login /> },
+        { path: "login", element: <Login /> },
         { path: "register", element: <Register /> },
         { path: "forget-password", element: <ForgetPass /> },
         { path: "reset-password", element: <ResetPass /> },

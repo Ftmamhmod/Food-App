@@ -1,13 +1,15 @@
 import NoData from "./../../../Shared/components/NoData/NoData";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { deleteResipes, getResipes } from "../../../../api/Resipes/Resipes";
 import { useNavigate } from "react-router-dom";
 import DeleteModal from "../../../Shared/Delete-modal/DeleteModal";
 import resipeImg from "./../../../../assets/images/1041373.png";
 import { baseImgURL } from "../../../../utils/axios";
 import Loader from "../../../Shared/Loader/Loader";
+import { AuthContext } from "../../../../context/AuthContext";
 
 const ResipesTable = () => {
+  const { loginUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const tableHeaderCell = [
     "Name",
@@ -41,6 +43,9 @@ const ResipesTable = () => {
       setNumberOfPages(pagesArray);
       setIsLoading(false);
     });
+    if (loginUser?.userGroup != "SuperAdmin") {
+      navigate("/dashboard");
+    }
   }, []);
   const handleAdd = () => {
     navigate("/dashboard/recipe-data");
@@ -63,17 +68,19 @@ const ResipesTable = () => {
           <h4>Recipe Table Details</h4>
           <p>You can check all details</p>
         </div>
-        <div>
-          <button
-            data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
-            onClick={handleAdd}
-            type="submit"
-            className="btn w-100 pe-3 pe-md-5 ps-3 ps-md-5 pt-2 pt-md-3 pb-2 pb-md-3 login-btn"
-          >
-            Add New Item
-          </button>
-        </div>
+        {loginUser?.userGroup === "SuperAdmin" && (
+          <div>
+            <button
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+              onClick={handleAdd}
+              type="submit"
+              className="btn w-100 pe-3 pe-md-5 ps-3 ps-md-5 pt-2 pt-md-3 pb-2 pb-md-3 login-btn"
+            >
+              Add New Item
+            </button>
+          </div>
+        )}
       </div>
       <input
         className="form-control mb-3"
@@ -99,6 +106,7 @@ const ResipesTable = () => {
                   <td>
                     <div className="img-container">
                       <img
+                        loading="lazy"
                         className="w-25 h-25 rounded-3"
                         style={{ maxWidth: "100px" }}
                         src={
@@ -114,28 +122,40 @@ const ResipesTable = () => {
                   <td className="text-break">{item?.description}</td>
                   <td className="text-nowrap">{item?.category[0]?.name}</td>
                   <td className="text-nowrap">
-                    <div className="d-flex gap-2">
-                      <button
-                        onClick={() =>
-                          navigate(`/dashboard/recipe-data`, {
-                            state: { recipeData: item },
-                          })
-                        }
-                        className="btn btn-sm "
-                      >
-                        <i className="fa-solid fa-edit"></i>
-                      </button>
-                      <button
-                        onClick={() => handleItemId(item.id)}
-                        className="btn btn-sm "
-                      >
-                        <i
-                          data-bs-toggle="modal"
-                          data-bs-target="#exampleModal"
-                          className="fa-solid fa-trash text-danger"
-                        ></i>
-                      </button>
-                    </div>
+                    {loginUser?.userGroup === "SuperAdmin" && (
+                      <div className="d-flex ">
+                        <button
+                          onClick={() =>
+                            navigate(`/dashboard/recipe-data`, {
+                              state: { recipeData: item },
+                            })
+                          }
+                          className="btn btn-sm "
+                        >
+                          <i className="fa-solid fa-edit"></i>
+                        </button>
+                        <button
+                          onClick={() => handleItemId(item.id)}
+                          className="btn btn-sm "
+                        >
+                          <i
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                            className="fa-solid fa-trash text-danger"
+                          ></i>
+                        </button>
+                      </div>
+                    )}
+                    {loginUser?.userGroup != "SuperAdmin" && (
+                      <div className="d-flex">
+                        <button className="btn btn-sm ">
+                          <i className="fa-solid fa-eye"></i>
+                        </button>
+                        <button className="btn btn-sm ">
+                          <i className="fa-solid fa-heart text-danger"></i>
+                        </button>
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))}

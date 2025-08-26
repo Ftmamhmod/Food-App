@@ -17,6 +17,7 @@ const Navbar = ({ loginUser }) => {
             <div className="d-flex align-items-center justify-content-center justify-content-md-end">
               {loginUser?.profilePic ? (
                 <img
+                  loading="lazy"
                   src={loginUser.profilePic}
                   alt="user avatar"
                   className="rounded-circle me-2"

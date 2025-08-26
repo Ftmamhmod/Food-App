@@ -14,6 +14,7 @@ const Header = ({ title, pargraph }) => {
         </div>
         <div className="col-md-4 col-sm-12 text-center">
           <img
+            loading="lazy"
             className="img-fluid"
             style={{ maxWidth: "100%", height: "auto" }}
             src={pathname === "/dashboard" ? homeImg : mainImg}

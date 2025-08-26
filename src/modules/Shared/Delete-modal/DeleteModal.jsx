@@ -20,7 +20,7 @@ const DeleteModal = ({ handleDelete, itemName }) => {
             ></button>
           </div>
           <div className="modal-body text-center">
-            {<img src={deleteImg} alt="Delete" />}
+            {<img loading="lazy" src={deleteImg} alt="Delete" />}
             <h4>Delete This {itemName} ?</h4>
             <p className="text-muted">
               are you sure you want to delete this {itemName} ? if you are sure

@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Sidebar as ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import logo from "./../../../../assets/images/3.png";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../../context/AuthContext";
 const LeftBar = ({ handleLogout }) => {
+  const { loginUser } = useContext(AuthContext);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const handleToggle = () => {
     setIsCollapsed(!isCollapsed);
@@ -40,25 +42,37 @@ const LeftBar = ({ handleLogout }) => {
               {" "}
               Home{" "}
             </MenuItem>
-            <MenuItem
-              icon={<i className="fa fa-users"></i>}
-              component={<Link to={"/dashboard/users"} />}
-            >
-              {" "}
-              Users{" "}
-            </MenuItem>
+            {loginUser?.userGroup === "SuperAdmin" && (
+              <MenuItem
+                icon={<i className="fa fa-users"></i>}
+                component={<Link to={"/dashboard/users"} />}
+              >
+                {" "}
+                Users{" "}
+              </MenuItem>
+            )}
             <MenuItem
               icon={<i className="fa fa-utensils"></i>}
               component={<Link to={"/dashboard/recipes"} />}
             >
               Recipes
             </MenuItem>
-            <MenuItem
-              icon={<i className="fa fa-list"></i>}
-              component={<Link to={"/dashboard/categories"} />}
-            >
-              Categories
-            </MenuItem>
+            {loginUser?.userGroup === "SuperAdmin" && (
+              <MenuItem
+                icon={<i className="fa fa-list"></i>}
+                component={<Link to={"/dashboard/categories"} />}
+              >
+                Categories
+              </MenuItem>
+            )}
+            {loginUser?.userGroup != "SuperAdmin" && (
+              <MenuItem
+                icon={<i className="fa fa-list"></i>}
+                component={<Link to={"/dashboard/favourites"} />}
+              >
+                Favourites
+              </MenuItem>
+            )}
             <MenuItem
               icon={<i className="fa fa-key"></i>}
               component={<Link to={"/dashboard/change-password"} />}

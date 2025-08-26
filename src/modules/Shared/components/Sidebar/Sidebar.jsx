@@ -29,6 +29,7 @@ const SideBar = ({ handleLogout }) => {
       <ProSidebar collapsed={isCollapsed}>
         <Menu>
           <img
+            loading="lazy"
             className="w-100 pt-4"
             onClick={handleToggle}
             src={logo}

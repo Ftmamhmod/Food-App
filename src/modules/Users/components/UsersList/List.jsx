@@ -64,6 +64,7 @@ const List = ({
                   <td className="w-25 h-25">
                     <div className=" w-50 h-50 rounded-3">
                       <img
+                        loading="lazy"
                         className="w-25 h-25 rounded-3"
                         src={
                           item?.imagePath

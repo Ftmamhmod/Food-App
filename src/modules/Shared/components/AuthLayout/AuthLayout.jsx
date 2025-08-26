@@ -8,7 +8,12 @@ const AuthLayout = () => {
           <div className="row vh-100 justify-content-center align-items-center">
             <div className="col-sm-11 col-md-8 col-lg-5 rounded-3 bg-white p-3 p-md-5">
               <div className="logo-container text-center">
-                <img className="w-75 w-md-50" src={logo} alt="Logo" />
+                <img
+                  loading="lazy"
+                  className="w-75 w-md-50"
+                  src={logo}
+                  alt="Logo"
+                />
               </div>
               <Outlet />
             </div>

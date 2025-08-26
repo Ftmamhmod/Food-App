@@ -4,9 +4,11 @@ import { deleteResipes, getResipes } from "../../../../api/Resipes/Resipes";
 import { useNavigate } from "react-router-dom";
 import DeleteModal from "../../../Shared/Delete-modal/DeleteModal";
 import resipeImg from "./../../../../assets/images/1041373.png";
-import { baseImgURL } from "../../../../utils/axios";
+import { axiosInstance, baseImgURL, endpoints } from "../../../../utils/axios";
 import Loader from "../../../Shared/Loader/Loader";
 import { AuthContext } from "../../../../context/AuthContext";
+import { toastConfig } from "../../../../utils/toast-config";
+import { toast } from "react-toastify";
 
 const ResipesTable = () => {
   const { loginUser } = useContext(AuthContext);
@@ -56,7 +58,16 @@ const ResipesTable = () => {
     const updatedData = recipes.filter((item) => item.id !== selectedItem);
     setRecipes(updatedData);
   };
-
+  const handleAddToFavorites = async (id) => {
+    try {
+      await axiosInstance.post(endpoints.userRecipe.add, {
+        recipeId: id,
+      });
+      toast.success("Recipe added to favorites", toastConfig);
+    } catch (error) {
+      console.error("Error adding to favorites:", error);
+    }
+  };
   return (
     <div>
       <DeleteModal handleDelete={handleDelete} itemName={"recipe"} />
@@ -148,7 +159,10 @@ const ResipesTable = () => {
                         <button className="btn btn-sm ">
                           <i className="fa-solid fa-eye"></i>
                         </button>
-                        <button className="btn btn-sm ">
+                        <button
+                          onClick={() => handleAddToFavorites(item.id)}
+                          className="btn btn-sm "
+                        >
                           <i className="fa-solid fa-heart text-danger"></i>
                         </button>
                       </div>

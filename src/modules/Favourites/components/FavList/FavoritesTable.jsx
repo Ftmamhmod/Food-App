@@ -4,6 +4,7 @@ import NoData from "./../../../Shared/components/NoData/NoData";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../../../utils/toast-config";
 import Loader from "../../../Shared/Loader/Loader";
+import resipeImg from "./../../../../assets/images/1041373.png";
 
 const FavoritesTable = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -63,7 +64,11 @@ const FavoritesTable = () => {
 
                 <img
                   className="img-fluid rounded-4 w-100"
-                  src={`${baseImgURL}${item?.recipe?.imagePath}`}
+                  src={
+                    item?.recipe?.imagePath
+                      ? `${baseImgURL}${item?.recipe?.imagePath}`
+                      : resipeImg
+                  }
                   alt={item?.recipe?.name}
                 />
               </div>

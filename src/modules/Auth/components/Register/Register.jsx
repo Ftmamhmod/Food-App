@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { Bounce, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { toastConfig } from "../../../../utils/toast-config";
+import { axiosInstance, endpoints } from "../../../../utils/axios";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -13,10 +13,7 @@ const Register = () => {
   } = useForm();
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post(
-        "https://upskilling-egypt.com:3006/api/v1/Users/Register",
-        data
-      );
+      const response = await axiosInstance.post(endpoints.users.register, data);
       toast.success("Register successful!", response.data.message, toastConfig);
       navigate("/verify-account");
     } catch (error) {

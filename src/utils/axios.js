@@ -1,4 +1,5 @@
 import axios from "axios";
+
 export const baseImgURL = "https://upskilling-egypt.com:3006/";
 export const axiosInstance = axios.create({
     baseURL: "https://upskilling-egypt.com:3006/api/v1",
@@ -25,6 +26,10 @@ export const endpoints = {
     users: {
         list: "/Users/",
         delete: "/Users/{id}",
+        register: "/Users/Register",
+        changePassword: "/Users/ChangePassword",
+        forgetPassword: "/Users/ForgetPassword",
+        login: "/Users/Login"
     }
 
 }

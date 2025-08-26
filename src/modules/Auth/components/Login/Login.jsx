@@ -1,10 +1,9 @@
-import axios from "axios";
 import { useState } from "react";
-
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
 import { toastConfig } from "../../../../utils/toast-config";
+import { axiosInstance, endpoints } from "../../../../utils/axios";
 
 const Login = ({ handleLogin }) => {
   const navigate = useNavigate();
@@ -15,10 +14,7 @@ const Login = ({ handleLogin }) => {
   } = useForm();
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post(
-        "https://upskilling-egypt.com:3006/api/v1/Users/Login",
-        data
-      );
+      const response = await axiosInstance.post(endpoints.users.login, data);
       localStorage.setItem("token", response.data.token);
       toast.success("Login successful!", toastConfig);
       navigate("/dashboard");

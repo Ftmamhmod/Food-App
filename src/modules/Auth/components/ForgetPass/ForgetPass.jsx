@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
 import { toastConfig } from "../../../../utils/toast-config";
+import { axiosInstance, endpoints } from "../../../../utils/axios";
 
 const ForgetPass = () => {
   const navigate = useNavigate();
@@ -13,8 +13,8 @@ const ForgetPass = () => {
   } = useForm();
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post(
-        "https://upskilling-egypt.com:3006/api/v1/Users/Reset/Request",
+      const response = await axiosInstance.post(
+        endpoints.users.forgotPassword,
         data
       );
       toast.success(response.data.message, toastConfig);

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
+import { toastConfig } from "../../../../utils/toast-config";
 
 const ForgetPass = () => {
   const navigate = useNavigate();
@@ -16,32 +17,15 @@ const ForgetPass = () => {
         "https://upskilling-egypt.com:3006/api/v1/Users/Reset/Request",
         data
       );
-      toast.success(response.data.message, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Bounce,
-      });
+      toast.success(response.data.message, toastConfig);
       navigate("/reset-password", {
         state: { email: data.email },
       });
     } catch (error) {
-      toast.error(`Reset link failed. ${error.response.data.message}`, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Bounce,
-      });
+      toast.error(
+        `Reset link failed. ${error.response.data.message}`,
+        toastConfig
+      );
     }
   };
   return (

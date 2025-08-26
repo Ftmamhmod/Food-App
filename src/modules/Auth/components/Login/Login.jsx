@@ -79,7 +79,7 @@ const Login = ({ handleLogin }) => {
         >
           <i
             className={`fa ${
-              showPassword ? "fa-eye-slash" : "fa-eye"
+              showPassword ? "fa-eye" : "fa-eye-slash"
             } cursor-pointer`}
           ></i>
         </span>

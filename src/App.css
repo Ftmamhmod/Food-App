@@ -46,3 +46,7 @@
   background-color: #f0f0f0 !important;
   border-color: #f0f0f0 !important;
 }
+
+.page-link:focus-within {
+  box-shadow: 0 0 0 0.25rem rgba(47, 140, 96, 0.25) !important;
+}

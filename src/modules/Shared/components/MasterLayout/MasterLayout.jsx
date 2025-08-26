@@ -1,7 +1,7 @@
 import Navbar from "./../Navbar/Navbar";
 
 import { Outlet } from "react-router-dom";
-import SideBar from "../SideBar/SideBar";
+import SideBar from "./../SideBar/SideBar";
 const MasterLayout = ({ handleLogout, loginUser }) => {
   return (
     <>

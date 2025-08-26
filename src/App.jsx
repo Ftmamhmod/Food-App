@@ -89,7 +89,10 @@ function App() {
         { path: "categories", element: <CategoriesList /> },
         { path: "categories-data", element: <CategoriesData /> },
         { path: "favourites", element: <FavList /> },
-        { path: "change-password", element: <ChangePass /> },
+        {
+          path: "change-password",
+          element: <ChangePass handleLogout={handleLogout} />,
+        },
         { path: "users", element: <UserList /> },
       ],
     },

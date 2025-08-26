@@ -10,12 +10,13 @@ const Register = () => {
     register,
     formState: { errors },
     handleSubmit,
+    watch,
   } = useForm();
   const onSubmit = async (data) => {
     try {
       const response = await axiosInstance.post(endpoints.users.register, data);
       toast.success("Register successful!", response.data.message, toastConfig);
-      navigate("/verify-account");
+      navigate("/verify-account", { state: { email: data.email } });
     } catch (error) {
       toast.error(
         `Register failed. ${error.response.data.message}`,
@@ -30,17 +31,13 @@ const Register = () => {
         <p className="text-muted">Welcome Back! Please enter your details</p>
       </div>
       <div className="d-flex ">
-        <div className="input-group mt-2">
+        <div className="input-group mt-4">
           <span className="input-group-text text-muted" id="basic-addon1">
             <i className="fa fa-envelope"></i>
           </span>
           <input
             {...register("userName", {
-              required: "Email is required",
-              pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: "Invalid email format",
-              },
+              required: "User name is required",
             })}
             type="text"
             className="form-control"
@@ -49,24 +46,30 @@ const Register = () => {
             aria-describedby="basic-addon1"
           />
         </div>
-        {errors.email && (
-          <span className="text-danger">{errors.email.message}</span>
+        {errors.userName && (
+          <span className="text-danger">{errors.userName.message}</span>
         )}
-        <div className="input-group mt-3">
+        <div className="input-group mt-4">
           <span className="input-group-text text-muted" id="basic-addon1">
             <i className="fa fa-lock"></i>
           </span>
           <input
-            {...register("email", { required: "Password is required" })}
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "Invalid email format",
+              },
+            })}
             type="email"
             className="form-control"
             placeholder="Enter your E-mail"
-            aria-label="Password"
+            aria-label="Email"
             aria-describedby="basic-addon1"
           />
         </div>
-        {errors.password && (
-          <span className="text-danger">{errors.password.message}</span>
+        {errors.email && (
+          <span className="text-danger">{errors.email.message}</span>
         )}
       </div>
       <div className="d-flex ">
@@ -76,11 +79,7 @@ const Register = () => {
           </span>
           <input
             {...register("country", {
-              required: "Email is required",
-              pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: "Invalid email format",
-              },
+              required: "Country is required",
             })}
             type="text"
             className="form-control"
@@ -89,24 +88,26 @@ const Register = () => {
             aria-describedby="basic-addon1"
           />
         </div>
-        {errors.email && (
-          <span className="text-danger">{errors.email.message}</span>
+        {errors.country && (
+          <span className="text-danger">{errors.country.message}</span>
         )}
-        <div className="input-group mt-3">
+        <div className="input-group mt-4">
           <span className="input-group-text text-muted" id="basic-addon1">
             <i className="fa fa-lock"></i>
           </span>
           <input
-            {...register("PhoneNumber", { required: "Password is required" })}
+            {...register("phoneNumber", {
+              required: "Phone Number is required",
+            })}
             type="number"
             className="form-control"
             placeholder="Phone Number"
-            aria-label="Password"
+            aria-label="number"
             aria-describedby="basic-addon1"
           />
         </div>
-        {errors.password && (
-          <span className="text-danger">{errors.password.message}</span>
+        {errors.PhoneNumber && (
+          <span className="text-danger">{errors.PhoneNumber.message}</span>
         )}
       </div>
       <div className="d-flex ">
@@ -115,11 +116,11 @@ const Register = () => {
             <i className="fa fa-envelope"></i>
           </span>
           <input
-            {...register("Password", {
-              required: "Email is required",
-              pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: "Invalid email format",
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 8,
+                message: "Password must be at least 8 characters",
               },
             })}
             type="password"
@@ -132,13 +133,15 @@ const Register = () => {
         {errors.email && (
           <span className="text-danger">{errors.email.message}</span>
         )}
-        <div className="input-group mt-3">
+        <div className="input-group mt-4">
           <span className="input-group-text text-muted" id="basic-addon1">
             <i className="fa fa-lock"></i>
           </span>
           <input
             {...register("confirmPassword", {
-              required: "Password is required",
+              required: "Confirm password is required",
+              validate: (value) =>
+                value === watch("Password") || "Passwords do not match",
             })}
             type="password"
             className="form-control"

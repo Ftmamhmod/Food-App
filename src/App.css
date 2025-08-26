@@ -50,3 +50,10 @@
 .page-link:focus-within {
   box-shadow: 0 0 0 0.25rem rgba(47, 140, 96, 0.25) !important;
 }
+.notFound {
+  min-height: 100vh;
+  background-image: url("./../src/assets/images/Vector\ \(1\).png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}

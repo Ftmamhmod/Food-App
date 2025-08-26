@@ -48,7 +48,7 @@ const FavoritesTable = () => {
           {isLoading && <Loader />}
           {favorites?.length == 0 && <NoData />}
           {favorites?.map((item) => (
-            <div className="col-lg-4 col-md-6 col-sm-12" key={item?.recipe?.id}>
+            <div className="col-lg-4 col-md-4 col-sm-12" key={item?.recipe?.id}>
               <div className="card h-100 shadow-sm rounded-4">
                 <div className="position-relative">
                   <div className="position-absolute top-0 end-0 m-2">
@@ -59,9 +59,9 @@ const FavoritesTable = () => {
                       <i className="fa fa-heart text-danger"></i>
                     </button>
                   </div>
-                  <div className="h-100 overflow-hidden">
+                  <div className="overflow-hidden" style={{ height: "250px" }}>
                     <img
-                      className=" card-img-top img-fluid rounded-top-4 "
+                      className="w-100 h-100 object-fit-cover rounded-top-4"
                       src={
                         item?.recipe?.imagePath
                           ? `${baseImgURL}${item?.recipe?.imagePath}`

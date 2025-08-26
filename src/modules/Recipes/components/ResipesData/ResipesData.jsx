@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
 import SecHeader from "../../../Shared/components/sec-header/SecHeader";
 import { addResipes, updateResipes } from "../../../../api/Resipes/Resipes";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { getCategories } from "../../../../api/Categories/Categories";
 import { useLocation, useNavigate } from "react-router-dom";
+import { axiosInstance, endpoints } from "../../../../utils/axios";
 const ResipesData = () => {
   const location = useLocation();
   const item = location.state?.recipeData || null;
@@ -62,14 +62,7 @@ const ResipesData = () => {
   const [cat, setCat] = useState(null);
   const getTagId = async () => {
     try {
-      const response = await axios.get(
-        "https://upskilling-egypt.com:3006/api/v1/tag/",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axiosInstance.get(endpoints.tag.list);
       setTagId(response.data);
       return response.data;
     } catch (error) {

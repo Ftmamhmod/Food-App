@@ -31,6 +31,14 @@ export const endpoints = {
         resetPassword: "/Users/Reset",
         forgetPassword: "/Users/Reset/Request",
         login: "/Users/Login"
+    },
+    tag: {
+        list: "/Tag/",
+    },
+    userRecipe: {
+        list: "/userRecipe/",
+        add: "/userRecipe/",
+        delete: "/userRecipe/{id}",
     }
 
 }

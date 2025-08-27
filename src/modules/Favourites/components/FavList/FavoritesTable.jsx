@@ -14,7 +14,6 @@ const FavoritesTable = () => {
     try {
       const response = await axiosInstance.get(endpoints.userRecipe.list);
       setFavorites(response?.data.data);
-      console.log(response?.data.data);
     } catch (error) {
       console.error("Error fetching favorites:", error);
     }

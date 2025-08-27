@@ -43,7 +43,9 @@ export const endpoints = {
         changePassword: "/Users/ChangePassword",
         resetPassword: "/Users/Reset",
         forgetPassword: "/Users/Reset/Request",
-        login: "/Users/Login"
+        login: "/Users/Login",
+        current: "/Users/currentUser",
+        updateProfile: "/Users/",
     },
     tag: {
         list: "/Tag/",
@@ -52,6 +54,7 @@ export const endpoints = {
         list: "/userRecipe/",
         add: "/userRecipe/",
         delete: "/userRecipe/{id}",
+
     }
 
 }

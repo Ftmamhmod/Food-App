@@ -17,7 +17,8 @@
   background-color: var(--primary-color);
   color: white;
 }
-.login-btn:hover {
+.login-btn:hover,
+.login-btn:active {
   background-color: rgba(63, 138, 76, 1);
   color: white;
 }

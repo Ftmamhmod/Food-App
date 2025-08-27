@@ -1,5 +1,6 @@
+import { Link } from "react-router-dom";
+
 const Navbar = ({ loginUser }) => {
-  console.log(loginUser);
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary rounded-4">
@@ -43,27 +44,11 @@ const Navbar = ({ loginUser }) => {
                   </a>
                   <ul className="dropdown-menu dropdown-menu-end">
                     <li>
-                      <a className="dropdown-item" href="#">
-                        Action
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Another action
-                      </a>
-                    </li>
-                    <li>
-                      <hr className="dropdown-divider" />
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Something else here
-                      </a>
+                      <Link className="dropdown-item" to="/dashboard/profile">
+                        Profile
+                      </Link>
                     </li>
                   </ul>
-                  <span className="text-success bg-success-subtle rounded-4 p-1">
-                    {loginUser?.userGroup}
-                  </span>
                 </li>
               </ul>
             </div>

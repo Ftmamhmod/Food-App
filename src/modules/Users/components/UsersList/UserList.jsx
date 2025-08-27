@@ -9,7 +9,6 @@ const UserList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Initial fetch & refetch when currentPage changes
   useEffect(() => {
     let isCancelled = false;
     const run = async () => {
@@ -29,9 +28,8 @@ const UserList = () => {
   const getNameValue = (e) => {
     const value = e.target.value.toLowerCase().trim();
     if (value === "") {
-      // Restore original list for current page
-      setCurrentPage(1); // reset to page 1 to avoid mismatch
-      return; // effect will refetch
+      setCurrentPage(1);
+      return;
     }
     const filteredUsers = users.filter((user) =>
       user?.userName?.toLowerCase().includes(value)

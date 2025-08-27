@@ -11,7 +11,6 @@ const ProfileData = () => {
   const { handleLogin } = useContext(AuthContext);
   const [isEditing, setIsEditing] = useState(false);
   const [user, setUser] = useState(null);
-  // react-hook-form
   const {
     register,
     handleSubmit,

@@ -204,7 +204,7 @@ const ResipesTable = () => {
           {numberOfPages?.map((page) => (
             <li
               onClick={async (e) => {
-                if (isLoading) return; // prevent double clicks
+                if (isLoading) return;
                 document
                   .querySelectorAll(".pagination .page-item")
                   .forEach((item) => {

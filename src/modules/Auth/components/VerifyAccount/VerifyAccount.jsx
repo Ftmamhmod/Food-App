@@ -19,14 +19,12 @@ const VerifyAccount = () => {
     defaultValues: { email: passedEmail, code: "" },
   });
 
-  // If user comes directly without email, you can optionally redirect back.
   useEffect(() => {
     if (!passedEmail) {
-      // Optionally: navigate('/register');
+      navigate("/register");
     }
-  }, [passedEmail]);
+  });
   const onSubmit = async (data) => {
-    // Ensure email is the passed one (disabled input not sent in some browsers)
     data.email = passedEmail;
     try {
       const response = await axiosInstance.put(endpoints.users.verify, data);

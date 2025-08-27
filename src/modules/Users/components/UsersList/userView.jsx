@@ -33,7 +33,6 @@ const UserView = () => {
         }
       })();
     } else if (!passedUser && !passedId) {
-      // Nothing to show, close modal
       navigate(-1);
     }
   }, [passedUser, passedId, navigate]);

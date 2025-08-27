@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { axiosInstance, endpoints } from "../../../../utils/axios";
 import { toastConfig } from "../../../../utils/toast-config";
 import { toast } from "react-toastify";
@@ -7,6 +7,7 @@ import { useEffect } from "react";
 
 const VerifyAccount = () => {
   const navigate = useNavigate();
+
   const location = useLocation();
   const passedEmail = location.state?.email || "";
   const {
@@ -29,11 +30,14 @@ const VerifyAccount = () => {
     data.email = passedEmail;
     try {
       const response = await axiosInstance.put(endpoints.users.verify, data);
-      localStorage.setItem("token", response.data.token);
-      toast.success("Login successful!", toastConfig);
+      toast.success("Registration successful!", toastConfig);
       navigate("/dashboard");
+      return "token", response.data.token;
     } catch (error) {
-      toast.error(`Login failed. ${error.response.data.message}`, toastConfig);
+      toast.error(
+        `Registration failed. ${error.response.data.message}`,
+        toastConfig
+      );
     }
   };
   if (localStorage.getItem("token")) {

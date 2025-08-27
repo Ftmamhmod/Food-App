@@ -33,8 +33,13 @@ const Register = () => {
         <h4 className="fw-bold  ">Register</h4>
         <p className="text-muted">Welcome Back! Please enter your details</p>
       </div>
+      <p className="text-muted">
+        Note: the password must include at least one lowercase letter, one
+        uppercase letter, one digit, one special character, and be at least 6
+        characters long.
+      </p>
       <div className="d-flex ">
-        <div className="input-group mt-4">
+        <div className="input-group mt-1">
           <span className="input-group-text text-muted" id="basic-addon1">
             <i className="fa fa-envelope"></i>
           </span>
@@ -52,7 +57,7 @@ const Register = () => {
         {errors.userName && (
           <span className="text-danger">{errors.userName.message}</span>
         )}
-        <div className="input-group mt-4">
+        <div className="input-group mt-1">
           <span className="input-group-text text-muted" id="basic-addon1">
             <i className="fa fa-lock"></i>
           </span>

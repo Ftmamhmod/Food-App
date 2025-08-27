@@ -9,30 +9,36 @@ const UserList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Initial fetch & refetch when currentPage changes
   useEffect(() => {
-    setIsLoading(true);
-    getUsers(setUsers, 5, 1, (pages) => {
-      const pagesArray = Array.from({ length: pages }, (_, i) => i + 1);
-      setNumberOfPages(pagesArray);
-      setIsLoading(false);
-    });
-  }, []);
-  const getNameValue = (e) => {
-    const value = e.target.value.toLowerCase();
-    if (value === "") {
-      getUsers(setUsers, 5, currentPage, (pages) => {
+    let isCancelled = false;
+    const run = async () => {
+      setIsLoading(true);
+      await getUsers(setUsers, 5, currentPage, (pages) => {
+        if (isCancelled) return;
         const pagesArray = Array.from({ length: pages }, (_, i) => i + 1);
         setNumberOfPages(pagesArray);
       });
-    } else {
-      const filteredUsers = users.filter((user) =>
-        user?.name?.toLowerCase().includes(value)
-      );
-      const searchResults = filteredUsers.length > 0 ? filteredUsers : [];
-      setUsers(searchResults);
-      setNumberOfPages([1]);
-      setCurrentPage(1);
+      if (!isCancelled) setIsLoading(false);
+    };
+    run();
+    return () => {
+      isCancelled = true;
+    };
+  }, [currentPage]);
+  const getNameValue = (e) => {
+    const value = e.target.value.toLowerCase().trim();
+    if (value === "") {
+      // Restore original list for current page
+      setCurrentPage(1); // reset to page 1 to avoid mismatch
+      return; // effect will refetch
     }
+    const filteredUsers = users.filter((user) =>
+      user?.userName?.toLowerCase().includes(value)
+    );
+    setUsers(filteredUsers);
+    setNumberOfPages([1]);
+    setCurrentPage(1);
   };
   return (
     <div>
@@ -59,29 +65,44 @@ const UserList = () => {
       />
       {/* Pagination */}
       <nav
-        aria-label="Page navigation example"
+        aria-label="Page navigation"
         className="text-muted d-flex justify-content-end"
       >
-        <ul className="pagination">
-          <li className="page-item">
+        <ul className="pagination mb-0">
+          <li
+            className={`page-item ${
+              currentPage === 1 || isLoading ? "disabled" : ""
+            }`}
+          >
             <a
               className="page-link text-muted"
               href="#"
-              onClick={() => setCurrentPage(1)}
+              onClick={(e) => {
+                e.preventDefault();
+                if (currentPage === 1 || isLoading) return;
+                setCurrentPage(1);
+              }}
             >
               «
             </a>
           </li>
-          <li className="page-item">
+          <li
+            className={`page-item ${
+              currentPage === 1 || isLoading ? "disabled" : ""
+            }`}
+          >
             <a
               className="page-link text-muted"
               href="#"
-              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+              onClick={(e) => {
+                e.preventDefault();
+                if (currentPage === 1 || isLoading) return;
+                setCurrentPage((p) => Math.max(1, p - 1));
+              }}
             >
               Previous
             </a>
           </li>
-
           {numberOfPages
             ?.slice(
               Math.max(0, Math.min(currentPage - 3, numberOfPages.length - 5)),
@@ -89,43 +110,58 @@ const UserList = () => {
             )
             .map((page) => (
               <li
-                onClick={(e) => {
-                  document.querySelectorAll(".page-item").forEach((item) => {
-                    item.style.backgroundColor = "";
-                  });
-                  e.currentTarget.style.backgroundColor = "#f0f0f0";
-                  getUsers(setUsers, 5, page, (pages) => {
-                    const pagesArray = Array.from(
-                      { length: pages },
-                      (_, i) => i + 1
-                    );
-                    setNumberOfPages(pagesArray);
-                  });
-                }}
-                className="page-item text-muted"
                 key={page}
+                className={`page-item ${page === currentPage ? "active" : ""} ${
+                  isLoading ? "disabled" : ""
+                }`}
               >
-                <a className="page-link text-muted" href="#">
+                <a
+                  href="#"
+                  className="page-link text-muted"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (isLoading || page === currentPage) return;
+                    setCurrentPage(page);
+                  }}
+                >
                   {page}
                 </a>
               </li>
             ))}
-          <li className="page-item">
+          <li
+            className={`page-item ${
+              currentPage === numberOfPages.length || isLoading
+                ? "disabled"
+                : ""
+            }`}
+          >
             <a
               className="page-link text-muted"
               href="#"
-              onClick={() =>
-                setCurrentPage(Math.min(numberOfPages.length, currentPage + 1))
-              }
+              onClick={(e) => {
+                e.preventDefault();
+                if (currentPage === numberOfPages.length || isLoading) return;
+                setCurrentPage((p) => Math.min(numberOfPages.length, p + 1));
+              }}
             >
               Next
             </a>
           </li>
-          <li className="page-item">
+          <li
+            className={`page-item ${
+              currentPage === numberOfPages.length || isLoading
+                ? "disabled"
+                : ""
+            }`}
+          >
             <a
               className="page-link text-muted"
               href="#"
-              onClick={() => setCurrentPage(numberOfPages.length)}
+              onClick={(e) => {
+                e.preventDefault();
+                if (currentPage === numberOfPages.length || isLoading) return;
+                setCurrentPage(numberOfPages.length);
+              }}
             >
               »
             </a>

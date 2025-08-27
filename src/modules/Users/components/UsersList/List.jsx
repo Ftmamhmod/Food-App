@@ -54,26 +54,35 @@ const List = ({
             </tr>
           </thead>
           <tbody className="m-auto">
-            {isLoading && <Loader />}
-            {data?.length > 0 &&
-              !isLoading &&
+            {isLoading && (
+              <tr>
+                <td colSpan={tableHeaderCell?.length || 1} className="p-0">
+                  <Loader height={240} label="Loading users..." />
+                </td>
+              </tr>
+            )}
+            {!isLoading &&
+              data?.length > 0 &&
               data?.map((item) => (
                 <tr key={item?.id}>
                   <td>{item?.id}</td>
                   <td>{item?.userName}</td>
-                  <td className="w-25 h-25">
-                    <div className=" w-50 h-50 rounded-3">
-                      <img
-                        loading="lazy"
-                        className="w-25 h-25 rounded-3"
-                        src={
-                          item?.imagePath
-                            ? `${baseImgURL}${item?.imagePath}`
-                            : userImg
-                        }
-                        alt=""
-                      />
-                    </div>
+                  <td>
+                    <img
+                      loading="lazy"
+                      className="rounded-3"
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        objectFit: "cover",
+                      }}
+                      src={
+                        item?.imagePath
+                          ? `${baseImgURL}${item?.imagePath}`
+                          : userImg
+                      }
+                      alt=""
+                    />
                   </td>
                   <td>{item?.email}</td>
                   <td>{item?.creationDate}</td>
@@ -95,7 +104,7 @@ const List = ({
                   </td>
                 </tr>
               ))}
-            {data?.length === 0 && !isLoading && (
+            {!isLoading && data?.length === 0 && (
               <tr>
                 <td colSpan="7">
                   <NoData />

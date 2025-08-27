@@ -1,4 +1,5 @@
 const Navbar = ({ loginUser }) => {
+  console.log(loginUser);
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary rounded-4">
@@ -30,7 +31,7 @@ const Navbar = ({ loginUser }) => {
                 ></i>
               )}
               <ul className="navbar-nav">
-                <li className="nav-item dropdown">
+                <li className="nav-item dropdown d-flex align-items-center">
                   <a
                     className="nav-link dropdown-toggle"
                     href="#"
@@ -38,7 +39,7 @@ const Navbar = ({ loginUser }) => {
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    {loginUser ? loginUser?.userName : "User"}
+                    {loginUser ? loginUser?.userName : "User"}{" "}
                   </a>
                   <ul className="dropdown-menu dropdown-menu-end">
                     <li>
@@ -60,6 +61,9 @@ const Navbar = ({ loginUser }) => {
                       </a>
                     </li>
                   </ul>
+                  <span className="text-success bg-success-subtle rounded-4 p-1">
+                    {loginUser?.userGroup}
+                  </span>
                 </li>
               </ul>
             </div>

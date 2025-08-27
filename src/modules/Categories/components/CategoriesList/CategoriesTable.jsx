@@ -167,7 +167,13 @@ const CategoriesTable = () => {
             </tr>
           </thead>
           <tbody className="m-auto">
-            {isLoading && <Loader />}
+            {isLoading && (
+              <tr>
+                <td colSpan={tableHeaderCell.length} className="p-0">
+                  <Loader height={220} label="Loading categories..." />
+                </td>
+              </tr>
+            )}
             {!isLoading &&
               categories?.length > 0 &&
               categories?.map((item) => (
@@ -196,7 +202,7 @@ const CategoriesTable = () => {
                   </td>
                 </tr>
               ))}
-            {categories?.length === 0 && !isLoading && (
+            {!isLoading && categories?.length === 0 && (
               <tr>
                 <td colSpan="4">
                   <NoData />
@@ -220,23 +226,32 @@ const CategoriesTable = () => {
 
           {numberOfPages?.map((page) => (
             <li
-              onClick={(e) => {
-                document.querySelectorAll(".page-item").forEach((item) => {
-                  item.style.backgroundColor = "";
-                });
+              onClick={async (e) => {
+                if (isLoading) return;
+                document
+                  .querySelectorAll(".pagination .page-item")
+                  .forEach((item) => {
+                    item.style.backgroundColor = "";
+                  });
                 e.currentTarget.style.backgroundColor = "#f0f0f0";
-                getCategories(setCategories, 5, page, (pages) => {
+                setIsLoading(true);
+                await getCategories(setCategories, 5, page, (pages) => {
                   const pagesArray = Array.from(
                     { length: pages },
                     (_, i) => i + 1
                   );
                   setNumberOfPages(pagesArray);
                 });
+                setIsLoading(false);
               }}
-              className="page-item text-muted"
+              className={`page-item text-muted ${isLoading ? "disabled" : ""}`}
               key={page}
             >
-              <a className="page-link text-muted" href="#">
+              <a
+                className="page-link text-muted"
+                href="#"
+                onClick={(e) => e.preventDefault()}
+              >
                 {page}
               </a>
             </li>

@@ -14,6 +14,7 @@ const ResipesTable = () => {
   const { loginUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const tableHeaderCell = [
+    "ID",
     "Name",
     "Image",
     "Price",
@@ -65,7 +66,7 @@ const ResipesTable = () => {
       });
       toast.success("Recipe added to favorites", toastConfig);
     } catch (error) {
-      console.error("Error adding to favorites:", error);
+      toast.error("Error adding to favorites: " + error.message, toastConfig);
     }
   };
   return (
@@ -106,25 +107,35 @@ const ResipesTable = () => {
             </tr>
           </thead>
           <tbody className="m-auto">
-            {isLoading && <Loader />}
-            {recipes?.length > 0 &&
+            {isLoading && (
+              <tr>
+                <td colSpan={tableHeaderCell.length} className="p-0">
+                  <Loader height={260} label="Loading recipes..." />
+                </td>
+              </tr>
+            )}
+            {!isLoading &&
+              recipes?.length > 0 &&
               recipes?.map((item) => (
                 <tr key={item?.id}>
+                  <td className="text-nowrap">{item?.id}</td>
                   <td className="text-nowrap">{item?.name}</td>
                   <td>
-                    <div className="img-container">
-                      <img
-                        loading="lazy"
-                        className="w-25 h-25 rounded-3"
-                        style={{ maxWidth: "100px" }}
-                        src={
-                          item?.imagePath
-                            ? `${baseImgURL}${item?.imagePath}`
-                            : resipeImg
-                        }
-                        alt=""
-                      />
-                    </div>
+                    <img
+                      loading="lazy"
+                      className="rounded-3"
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        objectFit: "cover",
+                      }}
+                      src={
+                        item?.imagePath
+                          ? `${baseImgURL}${item?.imagePath}`
+                          : resipeImg
+                      }
+                      alt=""
+                    />
                   </td>
                   <td className="text-nowrap">{item?.price}</td>
                   <td className="text-break">{item?.description}</td>
@@ -170,7 +181,7 @@ const ResipesTable = () => {
                   </td>
                 </tr>
               ))}
-            {recipes?.length === 0 && !isLoading && (
+            {!isLoading && recipes?.length === 0 && (
               <tr>
                 <td colSpan="6">
                   <NoData />
@@ -192,23 +203,32 @@ const ResipesTable = () => {
           </li>
           {numberOfPages?.map((page) => (
             <li
-              onClick={(e) => {
-                document.querySelectorAll(".page-item").forEach((item) => {
-                  item.style.backgroundColor = "";
-                });
+              onClick={async (e) => {
+                if (isLoading) return; // prevent double clicks
+                document
+                  .querySelectorAll(".pagination .page-item")
+                  .forEach((item) => {
+                    item.style.backgroundColor = "";
+                  });
                 e.currentTarget.style.backgroundColor = "#f0f0f0";
-                getResipes(setRecipes, 5, page, (pages) => {
+                setIsLoading(true);
+                await getResipes(setRecipes, 5, page, (pages) => {
                   const pagesArray = Array.from(
                     { length: pages },
                     (_, i) => i + 1
                   );
                   setNumberOfPages(pagesArray);
                 });
+                setIsLoading(false);
               }}
-              className="page-item text-muted"
+              className={`page-item text-muted ${isLoading ? "disabled" : ""}`}
               key={page}
             >
-              <a className="page-link text-muted" href="#">
+              <a
+                className="page-link text-muted"
+                href="#"
+                onClick={(e) => e.preventDefault()}
+              >
                 {page}
               </a>
             </li>

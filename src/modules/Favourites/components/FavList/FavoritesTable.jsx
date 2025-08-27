@@ -20,9 +20,12 @@ const FavoritesTable = () => {
     }
   };
   useEffect(() => {
-    setIsLoading(true);
-    getFavorites();
-    setIsLoading(false);
+    const run = async () => {
+      setIsLoading(true);
+      await getFavorites();
+      setIsLoading(false);
+    };
+    run();
   }, []);
 
   const handleDelete = async (id) => {
@@ -45,7 +48,7 @@ const FavoritesTable = () => {
           placeholder="Search by name..."
         />
         <div className="row g-4">
-          {isLoading && <Loader />}
+          {isLoading && <Loader height={200} label="Loading favorites..." />}
           {favorites?.length == 0 && <NoData />}
           {favorites?.map((item) => (
             <div className="col-lg-4 col-md-4 col-sm-12" key={item?.recipe?.id}>

@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import avatar from "../../../assets/images/abstract-user-flat-4.png";
 import { axiosInstance, baseImgURL, endpoints } from "../../../utils/axios";
 import Loader from "../../Shared/Loader/Loader";
+import { toast } from "react-toastify";
+import { toastConfig } from "../../../utils/toast-config";
+import { AuthContext } from "../../../context/AuthContext";
 
 const ProfileData = () => {
+  const { handleLogin } = useContext(AuthContext);
   const [isEditing, setIsEditing] = useState(false);
   const [user, setUser] = useState(null);
   // react-hook-form
@@ -56,6 +60,8 @@ const ProfileData = () => {
       formData.append("confirmPassword", data.confirmPassword);
       formData.append("profileImage", data.profileImage[0]);
       await axiosInstance.put(endpoints.users.updateProfile, formData);
+      toast.success("Profile updated successfully", toastConfig);
+      handleLogin();
       const updatedUser = await getCurrentUser();
       reset({
         userName: updatedUser.userName || "",
@@ -69,7 +75,7 @@ const ProfileData = () => {
       setImagePreview(null);
       setIsEditing(false);
     } catch (error) {
-      console.error("Error updating profile:", error);
+      toast.error(error.message, toastConfig);
     } finally {
       setSaving(false);
     }

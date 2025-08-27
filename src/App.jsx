@@ -30,6 +30,7 @@ import { Bounce, toast } from "react-toastify";
 import { AuthContext } from "./context/AuthContext";
 import ProfileData from "./modules/Profile/components/ProfileData";
 import Profile from "./modules/Profile/components/Profile";
+import UserView from "./modules/Users/components/UsersList/userView";
 
 function App() {
   const { loginUser, setLoginUser } = useContext(AuthContext);
@@ -86,6 +87,7 @@ function App() {
         },
         { path: "users", element: <UserList /> },
         { path: "profile", element: <Profile /> },
+        { path: "users-view/:id", element: <UserView /> },
       ],
     },
   ]);

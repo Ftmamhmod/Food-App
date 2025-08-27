@@ -1,6 +1,5 @@
 import { useState } from "react";
-
-import { updateResipes } from "../../../../api/Resipes/Resipes";
+import { useNavigate } from "react-router-dom";
 import NoData from "../../../Shared/components/NoData/NoData";
 import { baseImgURL } from "../../../../utils/axios";
 import userImg from "./../../../../assets/images/abstract-user-flat-4.png";
@@ -15,18 +14,23 @@ const List = ({
   tableHeaderCell,
   isLoading,
   getNameValue,
+  handleRefreshUsers,
 }) => {
   const [selectedItem, setSelectedItem] = useState(null);
+  const navigate = useNavigate();
 
   const handleItemId = (id) => {
     setSelectedItem(id);
   };
   const handleDelete = () => {
     deleteUser(selectedItem);
+    handleRefreshUsers();
   };
 
-  const handleEditRecipe = (id, updatedData) => {
-    updateResipes(id, updatedData);
+  const showUserDetails = (id, userObj) => {
+    navigate(`/dashboard/users-view/${id}`, {
+      state: { userId: id, user: userObj },
+    });
   };
   return (
     <div>
@@ -89,18 +93,25 @@ const List = ({
                   <td>{item?.phoneNumber}</td>
 
                   <td className="cursor-pointer">
-                    <i
-                      onClick={() => handleEditRecipe(item.id, item)}
-                      data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop"
-                      className="fa-solid fa-edit p-1 "
-                    ></i>
-                    <i
-                      onClick={() => handleItemId(item.id)}
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
-                      className="fa-solid fa-trash text-danger p-1"
-                    ></i>
+                    <div className="d-flex ">
+                      <button className="btn">
+                        <i
+                          onClick={() => showUserDetails(item.id, item)}
+                          data-bs-toggle="modal"
+                          data-bs-target="#staticBackdrop"
+                          className="fa-solid fa-eye p-1 "
+                        ></i>
+                      </button>
+                      <button className="btn">
+                        {" "}
+                        <i
+                          onClick={() => handleItemId(item.id)}
+                          data-bs-toggle="modal"
+                          data-bs-target="#exampleModal"
+                          className="fa-solid fa-trash text-danger p-1"
+                        ></i>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

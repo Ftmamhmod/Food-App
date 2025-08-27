@@ -1,20 +1,34 @@
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { axiosInstance, endpoints } from "../../../../utils/axios";
 import { toastConfig } from "../../../../utils/toast-config";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { useEffect } from "react";
 
 const VerifyAccount = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const passedEmail = location.state?.email || "";
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm();
+    watch,
+  } = useForm({
+    defaultValues: { email: passedEmail, code: "" },
+  });
+
+  // If user comes directly without email, you can optionally redirect back.
+  useEffect(() => {
+    if (!passedEmail) {
+      // Optionally: navigate('/register');
+    }
+  }, [passedEmail]);
   const onSubmit = async (data) => {
+    // Ensure email is the passed one (disabled input not sent in some browsers)
+    data.email = passedEmail;
     try {
-      const response = await axiosInstance.post(endpoints.users.login, data);
+      const response = await axiosInstance.put(endpoints.users.verify, data);
       localStorage.setItem("token", response.data.token);
       toast.success("Login successful!", toastConfig);
       navigate("/dashboard");
@@ -25,7 +39,6 @@ const VerifyAccount = () => {
   if (localStorage.getItem("token")) {
     navigate("/dashboard");
   }
-  const [showPassword, setShowPassword] = useState(false);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="title mt-4">
@@ -38,53 +51,41 @@ const VerifyAccount = () => {
           <i className="fa fa-envelope"></i>
         </span>
         <input
-          {...register("email", {
-            required: "Email is required",
-            pattern: {
-              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-              message: "Invalid email format",
-            },
-          })}
-          type="text"
+          {...register("email")}
+          type="email"
           className="form-control"
-          placeholder="Enter your E-mail"
-          aria-label="Username"
+          aria-label="Email"
           aria-describedby="basic-addon1"
+          value={watch("email")}
+          disabled
+          readOnly
         />
       </div>
-      {errors.email && (
-        <span className="text-danger">{errors.email.message}</span>
+      {!passedEmail && (
+        <span className="text-danger small">
+          No email provided. Go back to Register.
+        </span>
       )}
       <div className="input-group mt-3">
         <span className="input-group-text text-muted" id="basic-addon1">
           <i className="fa fa-lock"></i>
         </span>
         <input
-          {...register("password", { required: "Password is required" })}
-          type={showPassword ? "text" : "password"}
+          {...register("code", { required: "OTP is required" })}
+          type="text"
           className="form-control"
-          placeholder="Password"
-          aria-label="Password"
+          placeholder="OTP"
+          aria-label="OTP"
           aria-describedby="basic-addon1"
         />
-        <span
-          className="input-group-text"
-          onClick={() => setShowPassword(!showPassword)}
-        >
-          <i
-            className={`fa ${
-              showPassword ? "fa-eye" : "fa-eye-slash"
-            } cursor-pointer`}
-          ></i>
-        </span>
       </div>
-      {errors.password && (
-        <span className="text-danger">{errors.password.message}</span>
+      {errors.code && (
+        <span className="text-danger">{errors.code.message}</span>
       )}
 
       <div className="mt-4 mb-4">
         <button type="submit" className="btn w-100 p-2 login-btn fw-bold">
-          Login
+          Verify
         </button>
       </div>
     </form>

@@ -40,6 +40,12 @@ const UserList = () => {
     setNumberOfPages([1]);
     setCurrentPage(1);
   };
+  const handleRefreshUsers = () => {
+    getUsers(setUsers, 5, currentPage, (pages) => {
+      const pagesArray = Array.from({ length: pages }, (_, i) => i + 1);
+      setNumberOfPages(pagesArray);
+    });
+  };
   return (
     <div>
       <title>User List</title>
@@ -48,6 +54,7 @@ const UserList = () => {
         pargraph="You can now add your items that any user can order it from the Application and you can edit"
       />
       <List
+        handleRefreshUsers={handleRefreshUsers}
         isLoading={isLoading}
         title={"Users Table Details"}
         paragraph={"You can check all details"}

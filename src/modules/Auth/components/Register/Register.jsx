@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../../../utils/toast-config";
@@ -6,6 +7,8 @@ import { axiosInstance, endpoints } from "../../../../utils/axios";
 
 const Register = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const {
     register,
     formState: { errors },
@@ -112,8 +115,8 @@ const Register = () => {
       </div>
       <div className="d-flex ">
         <div className="input-group mt-4">
-          <span className="input-group-text text-muted" id="basic-addon1">
-            <i className="fa fa-envelope"></i>
+          <span className="input-group-text text-muted" id="password-addon">
+            <i className="fa fa-lock"></i>
           </span>
           <input
             {...register("password", {
@@ -123,32 +126,48 @@ const Register = () => {
                 message: "Password must be at least 8 characters",
               },
             })}
-            type="password"
+            type={showPassword ? "text" : "password"}
             className="form-control"
             placeholder="Password"
-            aria-label="Username"
-            aria-describedby="basic-addon1"
+            aria-label="Password"
+            aria-describedby="password-addon password-eye"
           />
+          <span
+            className="input-group-text cursor-pointer"
+            id="password-eye"
+            style={{ cursor: "pointer" }}
+            onClick={() => setShowPassword((p) => !p)}
+          >
+            <i className={`fa ${showPassword ? "fa-eye" : "fa-eye-slash"}`}></i>
+          </span>
         </div>
         {errors.email && (
           <span className="text-danger">{errors.email.message}</span>
         )}
         <div className="input-group mt-4">
-          <span className="input-group-text text-muted" id="basic-addon1">
+          <span className="input-group-text text-muted" id="confirm-addon">
             <i className="fa fa-lock"></i>
           </span>
           <input
             {...register("confirmPassword", {
               required: "Confirm password is required",
               validate: (value) =>
-                value === watch("Password") || "Passwords do not match",
+                value === watch("password") || "Passwords do not match",
             })}
-            type="password"
+            type={showConfirm ? "text" : "password"}
             className="form-control"
-            placeholder="Confirm Password "
-            aria-label="Password"
-            aria-describedby="basic-addon1"
+            placeholder="Confirm Password"
+            aria-label="Confirm Password"
+            aria-describedby="confirm-addon confirm-eye"
           />
+          <span
+            className="input-group-text cursor-pointer"
+            id="confirm-eye"
+            style={{ cursor: "pointer" }}
+            onClick={() => setShowConfirm((p) => !p)}
+          >
+            <i className={`fa ${showConfirm ? "fa-eye" : "fa-eye-slash"}`}></i>
+          </span>
         </div>
         {errors.password && (
           <span className="text-danger">{errors.password.message}</span>

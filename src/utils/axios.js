@@ -43,9 +43,11 @@ export const endpoints = {
         changePassword: "/Users/ChangePassword",
         resetPassword: "/Users/Reset",
         forgetPassword: "/Users/Reset/Request",
+        verify: "/Users/verify",
         login: "/Users/Login",
         current: "/Users/currentUser",
         updateProfile: "/Users/",
+        showUser: "/Users/{id}",
     },
     tag: {
         list: "/Tag/",

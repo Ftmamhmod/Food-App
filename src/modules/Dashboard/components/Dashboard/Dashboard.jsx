@@ -4,7 +4,7 @@ import SecHeader from "./../../../Shared/components/sec-header/SecHeader";
 const Dashboard = ({ loginUser }) => {
   return (
     <>
-      <title>Home</title>
+      <title>Food Recipe | Home</title>
       <Header
         title={`Welcome ${loginUser?.userName}! `}
         pargraph={

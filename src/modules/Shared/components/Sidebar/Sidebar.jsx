@@ -37,7 +37,7 @@ const SideBar = ({ handleLogout }) => {
           />
           <div className="pt-5">
             <MenuItem
-              icon={<i className="fa fa-home"></i>}
+              icon={<i className="fa fa-home "></i>}
               component={<Link to={"/dashboard"} />}
             >
               {" "}

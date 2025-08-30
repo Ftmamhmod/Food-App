@@ -42,8 +42,7 @@
 .bg-light-green {
   background-color: rgba(240, 255, 239, 1);
 }
-.active > .page-link,
-.page-link.active {
+.active > .page-link {
   background-color: #f0f0f0 !important;
   border-color: #f0f0f0 !important;
 }
@@ -57,4 +56,8 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+}
+.ps-menuitem-root.active {
+  background-color: rgba(0, 146, 71, 0.1) !important;
+  border-left: solid 4px #2f8c60;
 }

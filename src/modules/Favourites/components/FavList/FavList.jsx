@@ -4,6 +4,7 @@ import FavoritesTable from "./FavoritesTable";
 const FavList = () => {
   return (
     <>
+      <title>Food Recipe | Favorites</title>
       <Header
         title={"Favorites items!"}
         pargraph={
